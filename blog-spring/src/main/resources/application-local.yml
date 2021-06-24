@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: blogspring
+  datasource:
+    primary:
+      jdbc-url: jdbc:mysql://118.25.25.13:3096/blogcore001?charset=utf8&useSSL=false&serverTimezone=GMT&useUnicode=true&characterEncoding=UTF-8
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: root
+      password: J
+      hikari:
+        maximum-pool-size: 20
+        minimum-idle: 5
