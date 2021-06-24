@@ -1,5 +1,6 @@
-package club.neters.blog.core.config;
+package club.neters;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -22,7 +23,7 @@ import java.util.List;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig implements WebMvcConfigurer {
+public class AcSwaggerConfig implements WebMvcConfigurer {
 
     /**
      * Configure simple automated controllers pre-configured with the response
@@ -47,7 +48,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("club.neters.blog.api.controller"))
+                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))//只扫描有swagger注解的方法
                 .paths(PathSelectors.any())
                 .build()
                 .securitySchemes(securitySchemes())
