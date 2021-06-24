@@ -1,6 +1,4 @@
-# Ancba
- 
- [![JDK](https://img.shields.io/badge/jdk-1.8.0-d.svg)](#)  [![Build status](https://github.com/anjoy8/blog-spring/workflows/Java/badge.svg)](https://github.com/anjoy8/blog-spring/actions)  [![Build Status](https://dev.azure.com/laozhangisphi/anjoy8/_apis/build/status/anjoy8.blog-spring?branchName=master)](https://dev.azure.com/laozhangisphi/anjoy8/_build?definitionId=1)   [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/anjoy8/blog-spring/blob/master/LICENSE) 
+# Ancba [![JDK](https://img.shields.io/badge/jdk-1.8.0-d.svg)](#)  [![Build status](https://github.com/anjoy8/blog-spring/workflows/Java/badge.svg)](https://github.com/anjoy8/blog-spring/actions)  [![Build Status](https://dev.azure.com/laozhangisphi/anjoy8/_apis/build/status/anjoy8.blog-spring?branchName=master)](https://dev.azure.com/laozhangisphi/anjoy8/_build?definitionId=1)   [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/anjoy8/blog-spring/blob/master/LICENSE) 
  
 ### 打造`Blog.Core`项目的`SpringBoot`兄弟版。  
 -------
