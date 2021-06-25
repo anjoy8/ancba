@@ -2,6 +2,7 @@ package club.neters.user.infra.shiro;
 
 import club.neters.user.core.util.JsonUtil;
 import club.neters.user.domain.vo.ApiResultVo;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.springframework.http.HttpHeaders;
 
@@ -33,5 +34,13 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
             }
         }
         return false;
+    }
+
+    // TODO custom subject ?
+    // TODO ensure subject.isAuthenticated() && subject.getPrincipal() != null
+    // TODO verify token from redis
+    @Override
+    protected Subject getSubject(ServletRequest request, ServletResponse response) {
+        return super.getSubject(request, response);
     }
 }
