@@ -31,8 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
-*/application-local.properties
-src/main/resources/application-local.yml
 logs
-src/main/resources/application-local.yml
-blog-spring/src/main/resources/application-local.properties
+**/application-local.properties
