@@ -49,7 +49,6 @@
         <module>blog-spring</module>
         <module>ancba-eureka</module>
         <module>ancba-gateway</module>
-        <module>ancba-blog-user</module>
     </modules>
 
 </project>

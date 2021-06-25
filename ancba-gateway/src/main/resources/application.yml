@@ -13,8 +13,8 @@ spring:
             - Path=/blogspring/**
           filters:
             - StripPrefix=1
-        - id: ancba-blog-user
-          uri: lb://ancba-blog-user
+        - id: ancba-user
+          uri: lb://ancba-user
           predicates:
             - Path=/user/**
           filters:
