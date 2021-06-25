@@ -8,9 +8,9 @@ spring:
     gateway:
       routes:
         - id: blog-spring
-          uri: lb://blog-spring
+          uri: lb://ancba-blog
           predicates:
-            - Path=/blogspring/**
+            - Path=/ancba-blog/**
           filters:
             - StripPrefix=1
         - id: ancba-user

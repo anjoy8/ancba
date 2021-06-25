@@ -46,7 +46,7 @@
 
     <modules>
         <module>ancba-swagger</module>
-        <module>blog-spring</module>
+        <module>ancba-blog</module>
         <module>ancba-eureka</module>
         <module>ancba-gateway</module>
         <module>ancba-user</module>
