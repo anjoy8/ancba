@@ -1,0 +1,28 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: ancba-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: blog-spring
+          uri: lb://blog-spring
+          predicates:
+            - Path=/blogspring/**
+          filters:
+            - StripPrefix=1
+        - id: ancba-blog-user
+          uri: lb://ancba-blog-user
+          predicates:
+            - Path=/user/**
+          filters:
+            - StripPrefix=1
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
