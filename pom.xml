@@ -50,6 +50,6 @@
         <module>ancba-eureka</module>
         <module>ancba-gateway</module>
         <module>ancba-user</module>
+        <module>ancba-maven-archetype</module>
     </modules>
-
 </project>
