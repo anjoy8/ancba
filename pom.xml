@@ -51,5 +51,6 @@
         <module>ancba-gateway</module>
         <module>ancba-user</module>
         <module>ancba-maven-archetype</module>
+        <module>ancba-admin</module>
     </modules>
 </project>
