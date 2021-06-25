@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>club.neters</groupId>
-    <artifactId>blog-spring</artifactId>
+    <artifactId>ancba-blog</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>blog-spring</name>
+    <name>ancba-blog</name>
     <description>Brother project for Blog.Core</description>
     <properties>
         <java.version>1.8</java.version>
