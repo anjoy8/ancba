@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-06-25
  */
 public interface ISysUserInfoService extends IService<SysUserInfo> {
-
+    SysUserInfo findOne(String name, String pass);
 }

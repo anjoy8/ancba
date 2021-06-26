@@ -1,7 +1,9 @@
 package club.neters.user.infra.shiro;
 
 import club.neters.user.core.util.JsonUtil;
+import club.neters.user.core.util.JwtUtil;
 import club.neters.user.domain.vo.ApiResultVo;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.springframework.http.HttpHeaders;
@@ -19,10 +21,11 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        if (((HttpServletRequest) request).getHeader(HttpHeaders.AUTHORIZATION) != null) {
+        String token = ((HttpServletRequest) request).getHeader(HttpHeaders.AUTHORIZATION);
+        if (StringUtils.isNotEmpty(token)) {
             try {
                 // 验证token
-                return true;
+                return JwtUtil.idExpired(token);
             } catch (Exception e) {
                 // token error
                 try {

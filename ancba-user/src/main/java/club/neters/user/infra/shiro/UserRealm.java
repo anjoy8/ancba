@@ -40,9 +40,9 @@ public class UserRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
 
         // 获取用户角色集
-        Set<String> roleSet = new HashSet<String>();
+        Set<String> roleSet = new HashSet<>();
         roleSet.add("user");
-        Set<String> permissionSet = new HashSet<String>();
+        Set<String> permissionSet = new HashSet<>();
         permissionSet.add("doc:create");
         simpleAuthorizationInfo.setRoles(roleSet);
         simpleAuthorizationInfo.setStringPermissions(permissionSet);
