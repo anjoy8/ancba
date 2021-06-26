@@ -5,10 +5,11 @@ import club.neters.user.core.util.JwtUtil;
 import club.neters.user.domain.entity.SysUserInfo;
 import club.neters.user.domain.vo.ApiResultVo;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,8 +41,8 @@ public class LoginController {
             return ApiResultVo.error("用户名和密码不能为空");
         }
 
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-        Subject subject = SecurityUtils.getSubject();
+//        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+//        Subject subject = SecurityUtils.getSubject();
 
         try {
             password = DigestUtils.md5DigestAsHex(password.getBytes());
@@ -52,9 +53,9 @@ public class LoginController {
                 map.put("jti", sysUserInfo.getUID().toString());
                 map.put("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", username);
                 map.put("role", "user");
-                String tokenStr = JwtUtil.getToken(map);
+                String tokenStr = JwtUtil.createToken(map);
 
-                subject.login(token);
+//                subject.login(token);
 
                 return ApiResultVo.ok(tokenStr);
             } else {
@@ -66,12 +67,6 @@ public class LoginController {
         } catch (AuthenticationException e) {
             return ApiResultVo.error("认证失败");
         }
-    }
-
-    @RequiresRoles("admin")
-    @GetMapping("/test")
-    public ApiResultVo<String> test() {
-        return ApiResultVo.ok("test");
     }
 
     @RequestMapping("/unAuth")

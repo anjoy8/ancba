@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -72,5 +74,8 @@ public class SysUserInfo implements Serializable {
     @TableField("tdIsDelete")
     private Boolean tdIsDelete;
 
+
+    @TableField(exist = false)  //不是数据库字段,但必须使用
+    private List<Role> roles;
 
 }

@@ -1,12 +1,12 @@
 package club.neters.user.core.config;
 
-import club.neters.user.infra.shiro.JwtFilter;
+import club.neters.user.infra.shiro.AuthFilter;
 import club.neters.user.infra.shiro.UserRealm;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.session.mgt.DefaultSessionManager;
+import org.apache.shiro.spring.LifecycleBeanPostProcessor;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -22,45 +22,58 @@ import java.util.Map;
  * @date 2021/6/25
  */
 @Configuration
+
 public class ShiroConfig {
 
-    @Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
-        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-        shiroFilterFactoryBean.setSecurityManager(securityManager);
-
-        Map<String, Filter> filterMap = new HashMap<>();
-        //设置我们自定义的JWT过滤器
-        filterMap.put("jwt", new JwtFilter());
-        shiroFilterFactoryBean.setFilters(filterMap);
-
-        LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        filterChainDefinitionMap.put("/login", "anon");
-        filterChainDefinitionMap.put("/logout", "anon");
-        filterChainDefinitionMap.put("/**", "jwt");
-
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-        return shiroFilterFactoryBean;
-    }
-
-    @Bean
-    public DefaultWebSecurityManager securityManager() {
+    @Bean("securityManager")
+    public SecurityManager securityManager(UserRealm userRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setSessionManager(sessionManager());
-        securityManager.setRealm(userRealm());
+        securityManager.setRealm(userRealm);
+        securityManager.setRememberMeManager(null);
         return securityManager;
     }
 
-    @Bean
-    public DefaultSessionManager sessionManager() {
-        DefaultWebSessionManager webSessionManager = new DefaultWebSessionManager();
-        webSessionManager.setSessionIdUrlRewritingEnabled(false);
-        return webSessionManager;
+    @Bean("shiroFilter")
+    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
+        ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
+        shiroFilter.setSecurityManager(securityManager);
+
+        //oauth过滤
+        Map<String, Filter> filters = new HashMap<>();
+        filters.put("auth", new AuthFilter());
+        shiroFilter.setFilters(filters);
+
+        Map<String, String> filterMap = new LinkedHashMap<>();
+        filterMap.put("/webjars/**", "anon");
+        filterMap.put("/druid/**", "anon");
+        filterMap.put("/login", "anon");
+        filterMap.put("/swagger/**", "anon");
+        filterMap.put("/v2/api-docs", "anon");
+        filterMap.put("/swagger-ui.html", "anon");
+        filterMap.put("/swagger-resources/**", "anon");
+
+        //可以手动配置，也可以打注解，推荐注解的方式
+        filterMap.put("/test", "roles[AdminTest]");
+        filterMap.put("/list", "roles[admin,user]");
+        filterMap.put("/delete", "perms[admin:delete]");
+
+
+        filterMap.put("/**", "auth");
+        shiroFilter.setFilterChainDefinitionMap(filterMap);
+
+        return shiroFilter;
+    }
+
+    @Bean("lifecycleBeanPostProcessor")
+    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
     }
 
     @Bean
-    public UserRealm userRealm() {
-        return new UserRealm();
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
+        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
+        advisor.setSecurityManager(securityManager);
+        return advisor;
     }
 
 }

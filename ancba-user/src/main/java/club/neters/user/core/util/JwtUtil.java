@@ -7,7 +7,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.http.HttpHeaders;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Optional;
@@ -17,7 +20,7 @@ public class JwtUtil {
     /**
      * 生成token header.payload.sing
      */
-    public static String getToken(Map<String, String> map) {
+    public static String createToken(Map<String, String> map) {
         Calendar instance = Calendar.getInstance();
         instance.add(Calendar.HOUR, 1);
         //创建jwt builder
@@ -32,6 +35,19 @@ public class JwtUtil {
     }
 
     /**
+     * 获取请求的token
+     */
+    public static String getRequestToken(HttpServletRequest httpRequest) {
+        //从header中获取token
+        String token = httpRequest.getHeader(HttpHeaders.AUTHORIZATION);
+        //如果header中不存在token，则从参数中获取token
+        if (StringUtils.isBlank(token)) {
+            token = httpRequest.getParameter(HttpHeaders.AUTHORIZATION);
+        }
+        return token;
+    }
+
+    /**
      * 验证 token 合法性
      */
     public static DecodedJWT verify(String token) {
@@ -41,7 +57,7 @@ public class JwtUtil {
     /**
      * 验证 token 是否过期
      */
-    public static boolean idExpired(String token) {
+    public static boolean isNotExpired(String token) {
         try {
             DecodedJWT jwt = verify(token);
             Map<String, Claim> claims = jwt.getClaims();

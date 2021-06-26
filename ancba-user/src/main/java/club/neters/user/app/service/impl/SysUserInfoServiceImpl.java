@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 服务实现类
@@ -18,6 +20,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysUserInfoServiceImpl extends ServiceImpl<SysUserInfoMapper, SysUserInfo> implements ISysUserInfoService {
+
+    private SysUserInfoMapper sysUserInfoMapper;
+
+    public SysUserInfoServiceImpl(SysUserInfoMapper sysUserInfoMapper){
+
+        this.sysUserInfoMapper = sysUserInfoMapper;
+    }
+
     @Override
     public SysUserInfo findOne(String name, String pass) {
         LambdaQueryWrapper<SysUserInfo> wrapper = Wrappers.lambdaQuery();
@@ -25,5 +35,10 @@ public class SysUserInfoServiceImpl extends ServiceImpl<SysUserInfoMapper, SysUs
                 .eq(SysUserInfo::getULoginName, name)
                 .eq(SysUserInfo::getULoginPWD, pass.toUpperCase());
         return getOne(wrapper);
+    }
+
+    @Override
+    public List<SysUserInfo> allSysUserInfo(Integer uID) {
+        return sysUserInfoMapper.allSysUserInfo(uID);
     }
 }
