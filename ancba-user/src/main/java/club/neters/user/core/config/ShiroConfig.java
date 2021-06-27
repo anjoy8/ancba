@@ -25,6 +25,9 @@ import java.util.Map;
 
 public class ShiroConfig {
 
+    /**
+     * 自定义realm
+     */
     @Bean("securityManager")
     public SecurityManager securityManager(UserRealm userRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -33,6 +36,9 @@ public class ShiroConfig {
         return securityManager;
     }
 
+    /**
+     * 自定义过滤器
+     */
     @Bean("shiroFilter")
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
@@ -40,25 +46,26 @@ public class ShiroConfig {
 
         //oauth过滤
         Map<String, Filter> filters = new HashMap<>();
-        filters.put("auth", new AuthFilter());
+        filters.put("authc", new AuthFilter());
         shiroFilter.setFilters(filters);
 
         Map<String, String> filterMap = new LinkedHashMap<>();
-        filterMap.put("/webjars/**", "anon");
-        filterMap.put("/druid/**", "anon");
+        filterMap.put("/", "anon");
         filterMap.put("/login", "anon");
-        filterMap.put("/swagger/**", "anon");
-        filterMap.put("/v2/api-docs", "anon");
-        filterMap.put("/swagger-ui.html", "anon");
-        filterMap.put("/swagger-resources/**", "anon");
+
+        filterMap.put("/swagger-ui.html", "anon");//swagger
+        filterMap.put("/webjars/**", "anon");
+        filterMap.put("/v2/**", "anon");
+        filterMap.put("/swagger-resources/**", "anon");//swagger
 
         //可以手动配置，也可以打注解，推荐注解的方式
         filterMap.put("/test", "roles[AdminTest]");
+        filterMap.put("/test2", "roles[AdminTest2]");
         filterMap.put("/list", "roles[admin,user]");
         filterMap.put("/delete", "perms[admin:delete]");
 
 
-        filterMap.put("/**", "auth");
+        filterMap.put("/**", "authc");
         shiroFilter.setFilterChainDefinitionMap(filterMap);
 
         return shiroFilter;
@@ -69,6 +76,9 @@ public class ShiroConfig {
         return new LifecycleBeanPostProcessor();
     }
 
+    /**
+     * 加入注解的使用，不加入这个注解不生效
+     */
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();

@@ -1,13 +1,17 @@
 package club.neters.user.infra.shiro;
 
 
+import club.neters.user.core.constant.CommonConstant;
 import club.neters.user.core.util.HttpContextUtil;
+import club.neters.user.core.util.JsonUtil;
 import club.neters.user.core.util.JwtUtil;
+import club.neters.user.domain.vo.ApiResultVo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
+import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -20,20 +24,42 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class AuthFilter extends AuthenticatingFilter {
+public class AuthFilter extends BasicHttpAuthenticationFilter {
 
 
     // 定义jackson对象
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
+    @Override
+    protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
+        response.setContentType("application/json; charset=utf-8");
+        ApiResultVo<Object> resultVo = ApiResultVo.error("授权认识失败");
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding("UTF-8");
+        // 自定义返回内容
+        response.getWriter().write(JsonUtil.toJson(resultVo));
+    }
+
     /**
      * 生成自定义token
      */
     @Override
-    protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) throws Exception {
+    protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
         //获取请求token
         String token = JwtUtil.getRequestToken((HttpServletRequest) request);
         return new AuthToken(token);
+    }
+
+
+    /**
+     * 判断用户是否想要登入。
+     * 检测header里面是否包含Authorization字段即可
+     */
+    @Override
+    protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
+        HttpServletRequest req = (HttpServletRequest) request;
+        String authorization = req.getHeader(CommonConstant.JWT_TOKEN_HEADER);
+        return authorization != null;
     }
 
     /**

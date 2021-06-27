@@ -12,6 +12,7 @@ import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -23,6 +24,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
@@ -40,17 +42,33 @@ public class UserRealm extends AuthorizingRealm {
     @Resource
     private ISysUserInfoService sysUserInfoService;
 
+
+    /**
+     * 必须方法
+     */
+    @Override
+    public boolean supports(AuthenticationToken token) {
+        return token instanceof AuthToken;
+    }
+
+
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        //1. 从 PrincipalCollection 中来获取登录用户的信息
-        SysUserInfo user = (SysUserInfo) principalCollection.getPrimaryPrincipal();
-        //2.添加角色和权限
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        Set<String> roleSet = new HashSet<>();
-        List<SysUserInfo> sysUserInfos = sysUserInfoService.allSysUserInfo(user.getUID());
-        for (Role role : sysUserInfos.get(0).getRoles()) {
-            //2.1添加角色
-            simpleAuthorizationInfo.addRole(role.getName());
+
+        //如果用户未登录返回没有权限
+        String token = principalCollection.toString();
+        if (!(StringUtils.isNotEmpty(token) && JwtUtil.isNotExpired(token))) {
+            return simpleAuthorizationInfo;
+        }
+        //添加角色和权限
+        List<String> roleList = JwtUtil.getRoleFromToken(token);
+        if (CollectionUtils.isEmpty(roleList)) {
+            return simpleAuthorizationInfo;
+        }
+        for (String role : roleList) {
+            simpleAuthorizationInfo.addRole(role);
+            // 也可以进一步追加permission权限
         }
         return simpleAuthorizationInfo;
     }
@@ -81,6 +99,6 @@ public class UserRealm extends AuthorizingRealm {
             throw new UnknownAccountException("用户不存在!");
         }
 
-        return new SimpleAuthenticationInfo(userInfo, tokenPrincipal, getName());
+        return new SimpleAuthenticationInfo(tokenPrincipal, tokenPrincipal, getName());
     }
 }

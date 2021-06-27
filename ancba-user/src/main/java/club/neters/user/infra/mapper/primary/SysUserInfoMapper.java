@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.mapping.FetchType;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.util.List;
  * @author laozhang
  * @since 2021-06-25
  */
+@Repository
 public interface SysUserInfoMapper extends BaseMapper<SysUserInfo> {
 
     @Select("select * from sysUserInfo where uID = #{uID}")

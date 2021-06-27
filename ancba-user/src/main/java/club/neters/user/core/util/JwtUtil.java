@@ -7,13 +7,12 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.auth0.jwt.interfaces.JWTVerifier;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpHeaders;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Calendar;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class JwtUtil {
 
@@ -59,6 +58,7 @@ public class JwtUtil {
      */
     public static boolean isNotExpired(String token) {
         try {
+            token = token.replace("Bearer ","");
             DecodedJWT jwt = verify(token);
             Map<String, Claim> claims = jwt.getClaims();
             Integer exp = Optional.ofNullable(claims.get("exp")).map(Claim::asInt).orElse(0);
@@ -68,4 +68,18 @@ public class JwtUtil {
         }
     }
 
+    /**
+     * 获取当前token下的角色列表
+     */
+    public static List<String> getRoleFromToken(String token) {
+        token = token.replace("Bearer ","");
+        Algorithm algorithm = Algorithm.HMAC256(CommonConstant.JWT_HMAC256_SECRET);
+        JWTVerifier verifier = JWT.require(algorithm)
+                .withIssuer(CommonConstant.JWT_ISSUER)
+                .build();
+        DecodedJWT jwt = verifier.verify(token);
+        Map<String, Claim> claims = jwt.getClaims();
+        String roles = Optional.ofNullable(claims.get("role")).map(Claim::asString).orElse("");
+        return  StringUtils.isNotEmpty(roles) ? Arrays.asList(roles.split(",")) : null;
+    }
 }
