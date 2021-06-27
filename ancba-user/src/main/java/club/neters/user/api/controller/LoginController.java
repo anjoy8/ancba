@@ -9,10 +9,12 @@ import club.neters.user.domain.vo.ApiResultVo;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -76,8 +78,14 @@ public class LoginController {
         }
     }
 
-    @RequestMapping("/unAuth")
-    public ApiResultVo<String> unAuth() {
-        return ApiResultVo.error("未认证");
+    /**
+     * 退出
+     */
+    @ApiOperation(value = "退出")
+    @GetMapping("/logout1")
+    public ApiResultVo<String> logout1() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return ApiResultVo.ok("退出成功");
     }
 }
