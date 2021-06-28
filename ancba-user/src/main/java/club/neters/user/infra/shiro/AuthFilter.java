@@ -6,10 +6,10 @@ import club.neters.user.core.util.HttpContextUtil;
 import club.neters.user.core.util.JsonUtil;
 import club.neters.user.core.util.JwtUtil;
 import club.neters.user.domain.vo.ApiResultVo;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.BearerToken;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -25,10 +25,6 @@ import java.util.Map;
 
 @Component
 public class AuthFilter extends BasicHttpAuthenticationFilter {
-
-
-    // 定义jackson对象
-    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     @Override
     protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
@@ -47,7 +43,10 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
         //获取请求token
         String token = JwtUtil.getRequestToken((HttpServletRequest) request);
-        return new AuthToken(token);
+        if (token != null) {
+            token = token.replace("Bearer ", "");
+        }
+        return new BearerToken(token);
     }
 
 
@@ -67,10 +66,7 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        if (((HttpServletRequest) request).getMethod().equals(RequestMethod.OPTIONS.name())) {
-            return true;
-        }
-        return false;
+        return ((HttpServletRequest) request).getMethod().equals(RequestMethod.OPTIONS.name());
     }
 
     /**
@@ -90,8 +86,7 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
             Map<String, Object> result = new HashMap<>();
             result.put("status", 400);
             result.put("msg", "请先登录");
-            String json = MAPPER.writeValueAsString(result);
-            httpResponse.getWriter().print(json);
+            httpResponse.getWriter().print(JsonUtil.toJson(result));
             return false;
         }
         return executeLogin(request, response);
@@ -113,9 +108,8 @@ public class AuthFilter extends BasicHttpAuthenticationFilter {
             Map<String, Object> result = new HashMap<>();
             result.put("status", 400);
             result.put("msg", "登录凭证已失效，请重新登录");
-            String json = MAPPER.writeValueAsString(result);
-            httpResponse.getWriter().print(json);
-        } catch (IOException ioException) {
+            httpResponse.getWriter().print(JsonUtil.toJson(result));
+        } catch (IOException ignored) {
         }
         return false;
     }
