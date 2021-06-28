@@ -52,6 +52,6 @@
         <module>ancba-user</module>
         <module>ancba-maven-archetype</module>
         <module>ancba-admin</module>
-        <module>ancba-authorizer</module>
+        <module>ancba-authorizer-oauth2</module>
     </modules>
 </project>
