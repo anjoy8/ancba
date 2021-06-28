@@ -1,6 +1,7 @@
 package club.neters.core.config;
 
 import club.neters.core.constant.CommonConstant;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,31 +18,20 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 
-    @Bean
-    public JwtAccessTokenConverter accessTokenConverter() {
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey(CommonConstant.JWT_HMAC256_SECRET);  //对称秘钥，资源服务器使用该秘钥来验证
-        return converter;
-    }
+    @Autowired
+    private JwtAccessTokenConverter accessTokenConverter;
 
-    @Bean
-    public TokenStore tokenStore() {
-        return new JwtTokenStore(accessTokenConverter());
-    }
+    @Autowired
+    private TokenStore tokenStore;
 
-    @Bean
-    public DefaultTokenServices tokenServices() {
-        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-        defaultTokenServices.setTokenStore(tokenStore());
-        defaultTokenServices.setSupportRefreshToken(true);
-        return defaultTokenServices;
-    }
+    @Autowired
+    private DefaultTokenServices tokenServices;
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
         resources.resourceId("clientapp-res") // 配置资源id，这里的资源id和授权服务器中的资源id一致
-                .tokenStore(tokenStore()) //指定保存token的方式
-                .tokenServices(tokenServices())
+                .tokenStore(tokenStore) //指定保存token的方式
+                .tokenServices(tokenServices)
                 .stateless(true); // 设置这些资源仅基于令牌认证
     }
 
