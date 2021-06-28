@@ -10,30 +10,29 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 @Configuration
 @EnableAuthorizationServer
 public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    private final PasswordEncoder passwordEncoder;
-
-    private final TokenStore tokenStore = new InMemoryTokenStore();
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     // 该对象用来支持 password 模式
-    AuthenticationManager authenticationManager;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private JwtAccessTokenConverter accessTokenConverter;
 
     @Autowired
-    public OAuth2AuthorizationServerConfig(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
-        this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
-    }
+    private TokenStore tokenStore;
+
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        endpoints
-                .authenticationManager(authenticationManager)
-                .tokenStore(tokenStore);
+        endpoints.tokenStore(tokenStore)
+                .accessTokenConverter(accessTokenConverter)
+                .authenticationManager(authenticationManager);
     }
 
     @Override
