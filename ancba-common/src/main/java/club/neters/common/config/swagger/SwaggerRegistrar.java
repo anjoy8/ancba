@@ -1,6 +1,6 @@
 package club.neters.common.config.swagger;
 
-import club.neters.common.annotaion.EnableSwagger;
+import club.neters.common.annotaion.EnableAncbaSwagger;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
@@ -16,7 +16,7 @@ public class SwaggerRegistrar implements ImportBeanDefinitionRegistrar {
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
-        Map<String, Object> attrMap = importingClassMetadata.getAnnotationAttributes(EnableSwagger.class.getName());
+        Map<String, Object> attrMap = importingClassMetadata.getAnnotationAttributes(EnableAncbaSwagger.class.getName());
         if (attrMap == null) {
             return;
         }
