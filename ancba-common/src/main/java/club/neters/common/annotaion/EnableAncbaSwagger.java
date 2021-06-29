@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Import(SwaggerRegistrar.class)
-public @interface EnableSwagger {
+public @interface EnableAncbaSwagger {
 
     String basePackage();
 
