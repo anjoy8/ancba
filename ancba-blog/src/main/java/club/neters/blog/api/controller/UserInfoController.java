@@ -1,7 +1,6 @@
 package club.neters.blog.api.controller;
 
 import club.neters.blog.app.service.ISysUserInfoService;
-import club.neters.blog.core.annotation.Auth;
 import club.neters.blog.domain.request.user.UserInfoRequest;
 import club.neters.blog.domain.vo.ApiResultVo;
 import io.swagger.annotations.Api;
@@ -40,8 +39,7 @@ public class UserInfoController {
      * @return 用户列表
      */
     @ApiOperation(value = "获取用户列表")
-    @GetMapping(value = "/list")
-    @Auth(role = "user")
+    @GetMapping(value = "/api/list")
     public ApiResultVo<List<UserInfoVo>> listPage(UserInfoRequest query) {
         List<UserInfoVo> list = sysUserInfoService.findList(query);
         return ApiResultVo.ok(list);
