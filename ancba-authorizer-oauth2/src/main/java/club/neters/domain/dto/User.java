@@ -21,6 +21,11 @@ public class User implements UserDetails {
     private String userName;
 
     /**
+     * 用户角色
+     */
+    private String userRole;
+
+    /**
      * 用户密码
      */
     private String userPassword;

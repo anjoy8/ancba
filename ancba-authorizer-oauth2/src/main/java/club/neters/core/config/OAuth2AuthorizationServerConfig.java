@@ -55,8 +55,8 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
                 //Client2
                 .withClient("clientapp2")
                 .secret(passwordEncoder().encode("secret"))
-                .authorizedGrantTypes("implicit", "authorization_code","client_credentials")
-                .scopes("read", "write", "foo", "bar","webclient")
+                .authorizedGrantTypes("implicit", "authorization_code", "client_credentials")
+                .scopes("read", "write", "foo", "bar", "webclient")
                 .autoApprove(true)
                 .accessTokenValiditySeconds(3600)
                 .redirectUris("http://localhost:8181/login");
@@ -89,6 +89,8 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     public JwtAccessTokenConverter accessTokenConverter() {
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setSigningKey(CommonConstant.JWT_HMAC256_SECRET);
+        //使用自定义的 TokenConverter
+        converter.setAccessTokenConverter(new JwtCustomerAccessTokenConverter());
         return converter;
     }
 

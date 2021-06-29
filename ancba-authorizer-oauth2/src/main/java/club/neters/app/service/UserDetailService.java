@@ -13,6 +13,7 @@ public class UserDetailService implements UserDetailsService {
         User user = new User();
         user.setUserName("laozhang");
         user.setUserPassword("123456");
+        user.setUserRole("admin");
 
         if (username.equals(user.getUsername())) {
             return user;
