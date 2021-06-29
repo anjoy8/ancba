@@ -98,9 +98,8 @@
     </dependency>
     <dependency>
       <groupId>club.neters</groupId>
-      <artifactId>ancba-swagger</artifactId>
-      <version>1.0-SNAPSHOT</version>
-      <scope>compile</scope>
+      <artifactId>ancba-common</artifactId>
+      <version>1.0.0</version>
     </dependency>
   </dependencies>
 

@@ -23,8 +23,13 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
                 .authorizeRequests()
-                .anyRequest()
-                .authenticated();
+                .antMatchers("/").permitAll() // 任意访问
+                .antMatchers("/swagger-ui.html").permitAll() // 任意访问
+                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/v2/**").permitAll()
+                .antMatchers("/api/**").authenticated()
+                .anyRequest().authenticated();
     }
 
     @Override
