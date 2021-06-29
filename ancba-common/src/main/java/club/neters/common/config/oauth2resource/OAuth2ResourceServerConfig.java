@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
@@ -27,7 +26,6 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/webjars/**").permitAll()
                 .antMatchers("/v2/**").permitAll()
-                .antMatchers("/api/user/list").access("hasRole('user') or hasRole('admin')")
                 .antMatchers("/api/**").authenticated()
                 .anyRequest().authenticated();
     }

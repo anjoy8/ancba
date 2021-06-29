@@ -1,6 +1,7 @@
 package club.neters.blog.domain.vo;
 
 import lombok.Data;
+import org.springframework.http.HttpStatus;
 
 /**
  * common vo
@@ -51,6 +52,27 @@ public class ApiResultVo<T> {
         ApiResultVo<T> bean = new ApiResultVo<>();
         bean.setData(data);
         bean.setCode(500);
+        bean.setMessage(msg);
+        return bean;
+    }
+
+    public static <T> ApiResultVo<T> badRequest(String msg) {
+        ApiResultVo<T> bean = new ApiResultVo<>();
+        bean.setCode(400);
+        bean.setMessage(msg);
+        return bean;
+    }
+
+    public static <T> ApiResultVo<T> unauthorized(String msg) {
+        ApiResultVo<T> bean = new ApiResultVo<>();
+        bean.setCode(401);
+        bean.setMessage(msg);
+        return bean;
+    }
+
+    public static <T> ApiResultVo<T> forbidden(String msg) {
+        ApiResultVo<T> bean = new ApiResultVo<>();
+        bean.setCode(403);
         bean.setMessage(msg);
         return bean;
     }

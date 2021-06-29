@@ -1,6 +1,7 @@
 package club.neters.blog;
 
-import club.neters.common.annotaion.*;
+import club.neters.common.annotaion.EnableAncbaResourceServer;
+import club.neters.common.annotaion.EnableAncbaSwagger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
