@@ -3,13 +3,13 @@ package club.neters.blog.api.controller;
 import club.neters.blog.app.service.ISysUserInfoService;
 import club.neters.blog.domain.request.user.UserInfoRequest;
 import club.neters.blog.domain.vo.ApiResultVo;
+import club.neters.blog.domain.vo.user.UserInfoVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import club.neters.blog.domain.vo.user.UserInfoVo;
 
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class UserInfoController {
      * @return 用户列表
      */
     @ApiOperation(value = "获取用户列表")
-    @GetMapping(value = "/api/list")
+    @GetMapping(value = "list")
     public ApiResultVo<List<UserInfoVo>> listPage(UserInfoRequest query) {
         List<UserInfoVo> list = sysUserInfoService.findList(query);
         return ApiResultVo.ok(list);

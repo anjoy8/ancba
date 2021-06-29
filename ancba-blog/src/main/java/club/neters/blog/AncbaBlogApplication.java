@@ -1,12 +1,11 @@
 package club.neters.blog;
 
-import club.neters.common.annotaion.EnableAncbaSwagger;
+import club.neters.common.annotaion.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 @EnableAncbaSwagger(basePackage = "club.neters.blog")
-@EnableResourceServer
+@EnableAncbaResourceServer
 @SpringBootApplication
 public class AncbaBlogApplication {
 
