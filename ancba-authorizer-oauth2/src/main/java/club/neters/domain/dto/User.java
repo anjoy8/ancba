@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,7 +25,7 @@ public class User implements UserDetails {
      * 用户角色
      */
     private String userRole;
-
+    private Set<? extends GrantedAuthority> authorities;
     /**
      * 用户密码
      */
@@ -32,7 +33,11 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.authorities;
+    }
+
+    public void setAuthorities(Set<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
     }
 
     @Override
