@@ -45,4 +45,10 @@ public class UserInfoController {
         return ApiResultVo.ok(list);
     }
 
+    @ApiOperation(value = "测试接口授权")
+    @GetMapping(value = "test")
+    public String test(){
+        return "good!";
+    }
+
 }
