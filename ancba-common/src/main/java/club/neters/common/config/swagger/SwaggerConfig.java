@@ -1,4 +1,4 @@
-package club.neters.common.config;
+package club.neters.common.config.swagger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,12 +34,11 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
-        String str = "请求地址说明";
         return new ApiInfoBuilder()
-                .title("接口文档")
-                .description(str)
-                .contact(new Contact("langzhang", "", "xxx"))
-                .version("1.0")
+                .title(swaggerConfigProperties.getTitle())
+                .description(swaggerConfigProperties.getDescription())
+                .contact(new Contact("", "", swaggerConfigProperties.getEmail()))
+                .version(swaggerConfigProperties.getVersion())
                 .build();
     }
 

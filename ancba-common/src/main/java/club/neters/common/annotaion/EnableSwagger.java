@@ -1,6 +1,6 @@
 package club.neters.common.annotaion;
 
-import club.neters.common.config.SwaggerRegistrar;
+import club.neters.common.config.swagger.SwaggerRegistrar;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.Documented;
@@ -20,4 +20,12 @@ import java.lang.annotation.Target;
 public @interface EnableSwagger {
 
     String basePackage();
+
+    String title() default "Api Documentation";
+
+    String description() default "Api Documentation";
+
+    String version() default "1.0";
+
+    String email() default "laozhang@azlinli.com";
 }
