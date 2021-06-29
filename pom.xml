@@ -45,7 +45,6 @@
     </dependencies>
 
     <modules>
-        <module>ancba-swagger</module>
         <module>ancba-blog</module>
         <module>ancba-eureka</module>
         <module>ancba-gateway</module>
