@@ -1,10 +1,13 @@
 package club.neters.core.config;
 
+import club.neters.app.service.UserDetailService;
 import club.neters.core.constant.CommonConstant;
+import club.neters.core.util.UserPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -23,10 +26,8 @@ import java.util.Collections;
 @EnableAuthorizationServer
 public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    // 该对象用来支持 password 模式
     @Autowired
-    private AuthenticationManager authenticationManager;
-
+    private UserDetailService userDetailService;
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) {
@@ -41,6 +42,7 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     public void configure(ClientDetailsServiceConfigurer clients)
             throws Exception {
         clients.inMemory()
+
                 //Client1
                 .withClient("clientapp1")
                 .secret(passwordEncoder().encode("654321"))
@@ -51,6 +53,7 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
                 .redirectUris("http://localhost:8181/login")
                 .accessTokenValiditySeconds(5000)
                 .refreshTokenValiditySeconds(50000)
+
                 .and()
                 //Client2
                 .withClient("clientapp2")
@@ -66,7 +69,7 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     @Bean
     public DefaultTokenServices tokenServices() {
         final DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-        defaultTokenServices.setTokenStore(tokenStore());
+        defaultTokenServices.setTokenStore(jwtTokenStore());
         defaultTokenServices.setSupportRefreshToken(true);
         return defaultTokenServices;
     }
@@ -75,16 +78,31 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         final TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         tokenEnhancerChain.setTokenEnhancers(Collections.singletonList(accessTokenConverter()));
-        endpoints.tokenStore(tokenStore())
+        endpoints.tokenStore(jwtTokenStore())
                 .tokenEnhancer(tokenEnhancerChain)
-                .authenticationManager(authenticationManager);
+                .authenticationManager(authentication -> daoAuhthenticationOauthProvider().authenticate(authentication));
     }
 
+    /**
+     * 使用jwtTokenStore存储token
+     */
     @Bean
-    public TokenStore tokenStore() {
+    public TokenStore jwtTokenStore() {
         return new JwtTokenStore(accessTokenConverter());
     }
 
+    @Bean
+    public AuthenticationProvider daoAuhthenticationOauthProvider() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(userDetailService);
+        daoAuthenticationProvider.setHideUserNotFoundExceptions(false);
+        daoAuthenticationProvider.setPasswordEncoder(new UserPasswordEncoder());
+        return daoAuthenticationProvider;
+    }
+
+    /**
+     * 用于生成jwt
+     */
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();

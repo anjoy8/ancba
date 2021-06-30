@@ -12,5 +12,6 @@ public class AncbaAuthorizerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(AncbaAuthorizerApplication.class, args);
+        System.out.println("=================鉴权认证中心启动成功=============");
     }
 }
