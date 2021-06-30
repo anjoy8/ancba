@@ -24,12 +24,14 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
                 .and()
                 .authorizeRequests()
                 .antMatchers("/").permitAll() // 任意访问
+                .antMatchers("/csrf").permitAll() // 任意访问
                 .antMatchers("/swagger-ui.html").permitAll() // 任意访问
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/webjars/**").permitAll()
                 .antMatchers("/v2/**").permitAll()
                 .antMatchers("/api/**").authenticated()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+                .and().csrf().disable();
     }
 
     @Override
