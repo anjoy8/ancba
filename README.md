@@ -5,10 +5,13 @@
 
 ### 核心操作
 
-- [x] 在 `/blog-spring/src/main/resources/application-local.yml` 文件中，配置项目端口号、MySql连接数据等；
-- [x] 使用 `/blog-spring/src/main/club.neters.blog/generator/MyBatisPlusGenerator` 生成器（直接运行即可），生成三层代码（实体、仓储、服务），若存在，则不覆盖；
+- [x] 在 `..../resources/application-local.yml` 文件中，配置项目端口号、MySql连接数据等；
+- [x] 使用 `..../generator/MyBatisPlusGenerator` 生成器（直接运行即可），生成三层代码（实体、仓储、服务），若存在，则不覆盖；
 - [x] 封装插件：集成 `Swagger2` 做接口文档；
-- [ ] 基于 `jwt` 搭建 `RBAC` 授权认证；
+- [x] 封装 `shiro` ，实现简单用户授权操作（后续可替换成security）；
+- [x] 基于 `spring-security` 的`oauth2`协议搭建认证中心，并封装插件；
+- [x] 基于 `spring-cloud-eureka` 搭建服务发现；
+- [x] 基于 `jwt` 搭建 `RBAC` 服务授权；
 - [ ] and so on...
   
 ### 目的：   
