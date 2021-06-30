@@ -17,8 +17,10 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
 
     @Override
     public void configure(final HttpSecurity http) throws Exception {
-        http.sessionManagement()
+        http.cors()
+                .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+
                 .and()
                 .authorizeRequests()
                 .antMatchers("/").permitAll() // 任意访问
