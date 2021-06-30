@@ -46,7 +46,7 @@ public class UserInfoController {
         return ApiResultVo.ok(list);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('AdminTest')")
     @ApiOperation(value = "测试接口授权")
     @GetMapping(value = "test")
     public String test(){
