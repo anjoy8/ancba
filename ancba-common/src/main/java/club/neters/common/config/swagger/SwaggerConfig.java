@@ -29,7 +29,7 @@ public class SwaggerConfig {
 
     private SwaggerConfigProperties swaggerConfigProperties;
 
-    private String AUTH_SERVER = "http://localhost:8181/oauth/token";
+    private String AUTH_SERVER = "http://localhost:8181/oauth/token?username=laozhang&password=123456&grant_type=password&client_id=clientapp1&client_secret=654321";
 
     @Bean
     public Docket createRestApi() {
@@ -81,6 +81,7 @@ public class SwaggerConfig {
      */
     private AuthorizationScope[] scopes() {
         return new AuthorizationScope[]{
+                new AuthorizationScope("all", "All scope is trusted!")
         };
     }
 
