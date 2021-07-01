@@ -22,6 +22,9 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import java.util.Collections;
 
+/**
+ * 客户端信息配置和access_token生成配置
+ */
 @Configuration
 @EnableAuthorizationServer
 public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
@@ -38,6 +41,24 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
                 .allowFormAuthenticationForClients();
     }
 
+    /**
+     * 配置授权终端（authorization）
+     * 涉及：令牌（token）的增强器/转换器、token存储、令牌服务(token services)、密码编码器
+     * TokenConverter: 配置签名、accessToken声明
+     */
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
+        final TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(Collections.singletonList(accessTokenConverter()));
+        endpoints.tokenStore(jwtTokenStore())
+                .tokenEnhancer(tokenEnhancerChain)
+                .authenticationManager(authentication -> daoAuhthenticationOauthProvider().authenticate(authentication));
+    }
+
+    /**
+     * 客户端信息配置
+     * 暂用内存模式
+     */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients)
             throws Exception {
@@ -72,15 +93,6 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
         defaultTokenServices.setTokenStore(jwtTokenStore());
         defaultTokenServices.setSupportRefreshToken(true);
         return defaultTokenServices;
-    }
-
-    @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        final TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        tokenEnhancerChain.setTokenEnhancers(Collections.singletonList(accessTokenConverter()));
-        endpoints.tokenStore(jwtTokenStore())
-                .tokenEnhancer(tokenEnhancerChain)
-                .authenticationManager(authentication -> daoAuhthenticationOauthProvider().authenticate(authentication));
     }
 
     /**

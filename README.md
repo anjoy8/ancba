@@ -8,10 +8,10 @@
 - [x] 在 `..../resources/application-local.yml` 文件中，配置项目端口号、MySql连接数据等；
 - [x] 使用 `..../generator/MyBatisPlusGenerator` 生成器（直接运行即可），生成三层代码（实体、仓储、服务），若存在，则不覆盖；
 - [x] 封装插件：集成 `Swagger2` 做接口文档；
-- [x] 基于 `spring-security` 的`oauth2`协议搭建认证中心，并封装插件；
+- [x] 基于 `spring-security` 的`oauth2`协议搭建认证中心，并封装插件，全局可拔插使用；
 - [x] 基于 `spring-cloud-eureka` 搭建服务发现；
-- [x] 封装 `apache-shiro` ，实现简单用户授权操作（后续可替换成security）；
-- [x] 基于 `jwt` 搭建 `RBAC` 服务授权；
+- [x] 封装 `apache-shiro` 的demo ，实现简单用户授权操作（暂做demo，整个微服务项目基于security做认证授权）；
+- [ ] 基于数据库动态配置权限，实现 `RBAC` 服务授权；
 - [ ] and so on...
   
 ### 目的：   
