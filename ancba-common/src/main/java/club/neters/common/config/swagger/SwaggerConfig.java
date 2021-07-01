@@ -29,7 +29,7 @@ public class SwaggerConfig {
 
     private SwaggerConfigProperties swaggerConfigProperties;
 
-    private String AUTH_SERVER = "http://localhost:8181/oauth/token?username=test&password=test&grant_type=password&client_id=clientapp1&client_secret=654321";
+    private String AUTH_SERVER = "http://localhost:8181/oauth/token";
 
     @Bean
     public Docket createRestApi() {
