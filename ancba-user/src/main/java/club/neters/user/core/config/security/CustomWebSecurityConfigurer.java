@@ -105,27 +105,9 @@ public class CustomWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         return new AffirmativeBased(voterList);
     }
 
+    @Bean
     public AccessDecisionVoter<FilterInvocation> accessDecisionVoter() {
-        return new AccessDecisionVoter<FilterInvocation>() {
-            @Override
-            public boolean supports(ConfigAttribute attribute) {
-                return true;
-            }
-
-            @Override
-            public boolean supports(Class<?> clazz) {
-                return true;
-            }
-
-            @Override
-            public int vote(Authentication authentication, FilterInvocation invocation, Collection<ConfigAttribute> attributes) {
-                RequestMatcher pathMatcher = new AntPathRequestMatcher("/test");
-                if (pathMatcher.matches(invocation.getRequest())) {
-                    return ACCESS_GRANTED;
-                }
-                return ACCESS_DENIED;
-            }
-        };
+        return new CustomAccessDecisionVoter();
     }
 
 }
