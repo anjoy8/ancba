@@ -2,6 +2,7 @@ package club.neters.user.core.exception;
 
 import club.neters.user.domain.vo.ApiResultVo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -68,5 +69,14 @@ public class CommonExceptionHandler {
     public ApiResultVo<?> handleException(Exception e) {
         log.error("未处理异常", e);
         return ApiResultVo.error("服务异常");
+    }
+
+    /**
+     * 处理异常
+     */
+    @ExceptionHandler(value = {AccessDeniedException.class})
+    @ResponseBody
+    public ApiResultVo<?> handleException(AccessDeniedException e) {
+        return ApiResultVo.forbidden("您没有权限访问该资源");
     }
 }
