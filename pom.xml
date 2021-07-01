@@ -53,5 +53,6 @@
         <module>ancba-admin</module>
         <module>ancba-authorizer-oauth2</module>
         <module>ancba-common</module>
+        <module>ancba-user</module>
     </modules>
 </project>
