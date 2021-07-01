@@ -1,29 +1,38 @@
 package club.neters.user.core.config.security;
 
+import club.neters.user.core.constant.CommonConstant;
 import club.neters.user.core.util.JsonUtil;
 import club.neters.user.domain.vo.ApiResultVo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationProvider;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * 资源服务器配置
@@ -33,7 +42,7 @@ import javax.crypto.spec.SecretKeySpec;
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class CustomWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
@@ -43,11 +52,11 @@ public class CustomWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .authenticationProvider(authenticationProvider());
 
         // 无权限异常处理
+        http.authorizeRequests().accessDecisionManager(accessDecisionManager());
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
         http.authorizeRequests()
                 .anyRequest()
                 .authenticated();
-//        http.authorizeRequests().accessDecisionManager(AccessDecisionManager)
     }
 
     @Bean
@@ -64,8 +73,9 @@ public class CustomWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Bean
     public JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withSecretKey(new SecretKeySpec("sdfsdfsrty45634kkhllghtdgdfss345t678fs".getBytes(),
-                "HMAC256")).build();
+        return NimbusJwtDecoder.withSecretKey(new SecretKeySpec(
+                CommonConstant.JWT_HMAC256_SECRET.getBytes(StandardCharsets.UTF_8), "HMAC256"))
+                .build();
     }
 
     @Bean
@@ -87,4 +97,35 @@ public class CustomWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
             response.getWriter().write(JsonUtil.toJson(ApiResultVo.forbidden("没有权限访问该资源")));
         };
     }
+
+    @Bean
+    public AccessDecisionManager accessDecisionManager() {
+        List<AccessDecisionVoter<?>> voterList = new ArrayList<>();
+        voterList.add(accessDecisionVoter());
+        return new AffirmativeBased(voterList);
+    }
+
+    public AccessDecisionVoter<FilterInvocation> accessDecisionVoter() {
+        return new AccessDecisionVoter<FilterInvocation>() {
+            @Override
+            public boolean supports(ConfigAttribute attribute) {
+                return true;
+            }
+
+            @Override
+            public boolean supports(Class<?> clazz) {
+                return true;
+            }
+
+            @Override
+            public int vote(Authentication authentication, FilterInvocation invocation, Collection<ConfigAttribute> attributes) {
+                RequestMatcher pathMatcher = new AntPathRequestMatcher("/test");
+                if (pathMatcher.matches(invocation.getRequest())) {
+                    return ACCESS_GRANTED;
+                }
+                return ACCESS_DENIED;
+            }
+        };
+    }
+
 }

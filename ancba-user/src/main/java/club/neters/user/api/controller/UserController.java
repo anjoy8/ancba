@@ -22,4 +22,13 @@ public class UserController {
         System.out.println(authentication.getAuthorities());
         return "test";
     }
+
+    @GetMapping("/test1")
+    public String test1() {
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        Jwt jwt = (Jwt) authentication.getPrincipal();
+        System.out.println(authentication.getAuthorities());
+        return "test1";
+    }
 }
