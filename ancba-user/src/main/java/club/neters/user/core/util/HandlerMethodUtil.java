@@ -1,6 +1,5 @@
 package club.neters.user.core.util;
 
-import club.neters.user.core.annotation.AllowAnonymous;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.HandlerExecutionChain;

@@ -1,6 +1,6 @@
 package club.neters.user.core.config.security;
 
-import club.neters.user.core.annotation.AllowAnonymous;
+import club.neters.user.core.annotation.AnonAllowed;
 import club.neters.user.core.constant.CommonConstant;
 import club.neters.user.core.util.HandlerMethodUtil;
 import club.neters.user.core.util.JsonUtil;
@@ -34,9 +34,6 @@ import org.springframework.security.web.authentication.AnonymousAuthenticationFi
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.HandlerExecutionChain;
-import org.springframework.web.servlet.HandlerMapping;
 
 import javax.annotation.Resource;
 import javax.crypto.spec.SecretKeySpec;
@@ -158,7 +155,7 @@ public class CustomWebSecurityConfigurer extends WebSecurityConfigurerAdapter im
                 // 匿名注解允许匿名访问
                 HandlerMethod handlerMethod = HandlerMethodUtil.getHandlerMethod(request);
                 if (handlerMethod != null) {
-                    AllowAnonymous annotation = handlerMethod.getMethodAnnotation(AllowAnonymous.class);
+                    AnonAllowed annotation = handlerMethod.getMethodAnnotation(AnonAllowed.class);
                     if (annotation != null) {
                         super.doFilter(req, res, chain);
                         return;

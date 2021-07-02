@@ -1,6 +1,6 @@
 package club.neters.user.api.controller;
 
-import club.neters.user.core.annotation.AllowAnonymous;
+import club.neters.user.core.annotation.AnonAllowed;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @GetMapping("/test")
-    @AllowAnonymous
+    @AnonAllowed
     public String test() {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();

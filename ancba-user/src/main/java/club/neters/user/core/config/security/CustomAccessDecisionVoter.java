@@ -1,9 +1,8 @@
 package club.neters.user.core.config.security;
 
-import club.neters.user.core.annotation.AllowAnonymous;
+import club.neters.user.core.annotation.AnonAllowed;
 import club.neters.user.core.constant.CommonConstant;
 import club.neters.user.core.util.HandlerMethodUtil;
-import org.apache.commons.lang.ArrayUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.ConfigAttribute;
@@ -43,7 +42,7 @@ public class CustomAccessDecisionVoter implements AccessDecisionVoter<FilterInvo
         // 匿名注解允许无权限访问
         HandlerMethod handlerMethod = HandlerMethodUtil.getHandlerMethod(request);
         if (handlerMethod != null) {
-            AllowAnonymous annotation = handlerMethod.getMethodAnnotation(AllowAnonymous.class);
+            AnonAllowed annotation = handlerMethod.getMethodAnnotation(AnonAllowed.class);
             if (annotation != null) {
                 return ACCESS_GRANTED;
             }
