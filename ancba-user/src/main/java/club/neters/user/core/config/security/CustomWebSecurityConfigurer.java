@@ -1,8 +1,12 @@
 package club.neters.user.core.config.security;
 
+import club.neters.user.core.annotation.AllowAnonymous;
 import club.neters.user.core.constant.CommonConstant;
+import club.neters.user.core.util.HandlerMethodUtil;
 import club.neters.user.core.util.JsonUtil;
 import club.neters.user.domain.vo.ApiResultVo;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -29,7 +33,12 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.HandlerExecutionChain;
+import org.springframework.web.servlet.HandlerMapping;
 
+import javax.annotation.Resource;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -51,7 +60,7 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class CustomWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
+public class CustomWebSecurityConfigurer extends WebSecurityConfigurerAdapter implements ApplicationContextAware {
 
 
     @Override
@@ -131,8 +140,7 @@ public class CustomWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
             public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 
                 // TODO
-                String[] urls = {"/swagger-ui.html", "/swagger-resources/**",
-                        "/webjars/**", "/v2/**", "/error"};
+                String[] urls = CommonConstant.SECURITY_WHITELIST;
                 HttpServletRequest request = (HttpServletRequest) req;
                 HttpServletResponse response = (HttpServletResponse) res;
                 if (HttpMethod.OPTIONS.matches(request.getMethod())) {
@@ -146,6 +154,17 @@ public class CustomWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                         return;
                     }
                 }
+
+                // 匿名注解允许匿名访问
+                HandlerMethod handlerMethod = HandlerMethodUtil.getHandlerMethod(request);
+                if (handlerMethod != null) {
+                    AllowAnonymous annotation = handlerMethod.getMethodAnnotation(AllowAnonymous.class);
+                    if (annotation != null) {
+                        super.doFilter(req, res, chain);
+                        return;
+                    }
+                }
+
                 String header = request.getHeader(HttpHeaders.AUTHORIZATION);
                 if (header == null || "".equals(header)) {
                     response.setCharacterEncoding("utf-8");
@@ -158,5 +177,9 @@ public class CustomWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
             }
         };
     }
+
+
+    @Resource
+    private ApplicationContext applicationContext;
 
 }

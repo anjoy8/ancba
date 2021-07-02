@@ -1,6 +1,8 @@
 package club.neters.user.core.config.security;
 
+import club.neters.user.core.annotation.AllowAnonymous;
 import club.neters.user.core.constant.CommonConstant;
+import club.neters.user.core.util.HandlerMethodUtil;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDecisionVoter;
@@ -10,6 +12,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.web.method.HandlerMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
@@ -32,14 +35,24 @@ public class CustomAccessDecisionVoter implements AccessDecisionVoter<FilterInvo
 
     @Override
     public int vote(Authentication authentication, FilterInvocation invocation, Collection<ConfigAttribute> attributes) {
-        // TODO 扩展
-        String[] whiteList = CommonConstant.SECURITY_WHITELIST;
-        String[] permissionRequests = {"/test"};
         HttpServletRequest request = invocation.getRequest();
         // OPTIONS全放开
         if (HttpMethod.OPTIONS.matches(request.getMethod())) {
             return ACCESS_GRANTED;
         }
+        // 匿名注解允许无权限访问
+        HandlerMethod handlerMethod = HandlerMethodUtil.getHandlerMethod(request);
+        if (handlerMethod != null) {
+            AllowAnonymous annotation = handlerMethod.getMethodAnnotation(AllowAnonymous.class);
+            if (annotation != null) {
+                return ACCESS_GRANTED;
+            }
+        }
+
+        // TODO 扩展
+        String[] whiteList = CommonConstant.SECURITY_WHITELIST;
+        String[] permissionRequests = {"/test"};
+
         // 白名单全放开
         for (String url : whiteList) {
             RequestMatcher pathMatcher = new AntPathRequestMatcher(url);
