@@ -64,8 +64,7 @@ public class CustomWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().accessDecisionManager(accessDecisionManager());
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
         // 配置401/403处理器
-        http.exceptionHandling().authenticationEntryPoint(new AdminAuthenticationEntryPoint())
-                .accessDeniedHandler(new AdminAccessDeineHandler());
+        http.exceptionHandling().accessDeniedHandler(new AdminAccessDeineHandler());
         // 不创建会话 - 即通过前端传token到后台过滤器中验证是否存在访问权限
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.anonymous().authenticationFilter(anonymousAuthenticationFilter());
@@ -149,6 +148,9 @@ public class CustomWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 }
                 String header = request.getHeader(HttpHeaders.AUTHORIZATION);
                 if (header == null || "".equals(header)) {
+                    response.setCharacterEncoding("utf-8");
+                    response.setContentType("text/javascript;charset=utf-8");
+                    response.getWriter().print(JsonUtil.toJson(ApiResultVo.unauthorized("未认证，请先登录！")));
                     response.setStatus(401);
                     return;
                 }

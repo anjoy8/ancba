@@ -31,7 +31,7 @@ public class CustomAccessDecisionVoter implements AccessDecisionVoter<FilterInvo
     public int vote(Authentication authentication, FilterInvocation invocation, Collection<ConfigAttribute> attributes) {
         // TODO 扩展
         String[] urls = {"/swagger-ui.html", "/swagger-resources/**",
-                "/webjars/**", "/v2/**"};
+                "/webjars/**", "/v2/**","/test"};
         HttpServletRequest request = invocation.getRequest();
         if (HttpMethod.OPTIONS.matches(request.getMethod())) {
             return ACCESS_GRANTED;
