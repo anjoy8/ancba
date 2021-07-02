@@ -5,6 +5,8 @@ import club.neters.user.core.util.JsonUtil;
 import club.neters.user.domain.vo.ApiResultVo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
@@ -23,8 +25,18 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.crypto.spec.SecretKeySpec;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +61,7 @@ public class CustomWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         // 无权限异常处理
         http.authorizeRequests().accessDecisionManager(accessDecisionManager());
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+        http.anonymous().authenticationFilter(anonymousAuthenticationFilter());
         http.authorizeRequests()
                 .anyRequest()
                 .authenticated();
@@ -103,6 +116,37 @@ public class CustomWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Bean
     public AccessDecisionVoter<FilterInvocation> accessDecisionVoter() {
         return new CustomAccessDecisionVoter();
+    }
+
+    @Bean
+    public AnonymousAuthenticationFilter anonymousAuthenticationFilter() {
+        return new AnonymousAuthenticationFilter("ANONYMOUS") {
+            @Override
+            public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+                // TODO
+                String[] urls = {"/swagger-ui.html", "/swagger-resources/**",
+                        "/webjars/**", "/v2/**"};
+                HttpServletRequest request = (HttpServletRequest) req;
+                HttpServletResponse response = (HttpServletResponse) res;
+                if (HttpMethod.OPTIONS.matches(request.getMethod())) {
+                    chain.doFilter(req, res);
+                    return;
+                }
+                for (String url : urls) {
+                    RequestMatcher pathMatcher = new AntPathRequestMatcher(url);
+                    if (pathMatcher.matches(request)) {
+                        chain.doFilter(req, res);
+                        return;
+                    }
+                }
+                String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+                if (header == null || "".equals(header)) {
+                    response.setStatus(401);
+                    return;
+                }
+                chain.doFilter(req, res);
+            }
+        };
     }
 
 }

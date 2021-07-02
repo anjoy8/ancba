@@ -18,7 +18,6 @@ public class UserController {
     public String test() {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
-        Jwt jwt = (Jwt) authentication.getPrincipal();
         System.out.println(authentication.getAuthorities());
         return "test";
     }
