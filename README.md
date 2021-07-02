@@ -10,8 +10,9 @@
 - [x] 封装插件：集成 `Swagger2` 做接口文档；
 - [x] 基于 `spring-security` 的`oauth2`协议搭建认证中心，并封装插件，全局可拔插使用；
 - [x] 基于 `spring-cloud-eureka` 搭建服务发现；
-- [x] 封装 `apache-shiro` 的demo ，实现简单用户授权操作（暂做demo，整个微服务项目基于security做认证授权）；
-- [ ] 基于数据库动态配置权限，实现 `RBAC` 服务授权；
+- [x] 封装 `apache-shiro` 微服务 ，实现简单用户授权操作（测试 `shiro` 的demo，整个微服务项目基于security做认证授权）；
+- [x] 基于数据库动态配置权限，实现 `RBAC` 服务授权—— 参考 `ancba-user` 用户微服务；
+- [x] 使用 `spring-cloud-openfeign` 实现服务间调用—— 参考 `ancba-user` 用户微服务；
 - [ ] and so on...
   
 ### 目的：   
