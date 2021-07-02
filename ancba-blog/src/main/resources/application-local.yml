@@ -1,6 +1,4 @@
 spring:
-  application:
-    name: ancba-blog
   datasource:
     primary:
       jdbc-url: jdbc:mysql://118.25.25.13:3096/blogcore001?charset=utf8&useSSL=false&serverTimezone=GMT&useUnicode=true&characterEncoding=UTF-8
