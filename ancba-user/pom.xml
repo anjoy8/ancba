@@ -79,6 +79,16 @@
             <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
+        <!--OpenFeign-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-okhttp</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
