@@ -10,12 +10,6 @@ spring:
     admin:
       client:
         url: http://localhost:8088
-  datasource:
-    primay:
-      jdbc-url: jdbc:mysql://118.25.25.13:3096/singleboot?charset=utf8&useSSL=false&serverTimezone=GMT&useUnicode=true&characterEncoding=UTF-8
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      username: root
-      password: J
 
 management:
   endpoints:
