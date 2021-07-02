@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: ancba-demo
+    name: ancba-authorizer-oauth2
   profiles:
     active: dev
 

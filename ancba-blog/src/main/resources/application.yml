@@ -11,6 +11,15 @@ spring:
       client:
         url: http://localhost:8088
 
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    enabled: true
+
 management:
   endpoints:
     web:
