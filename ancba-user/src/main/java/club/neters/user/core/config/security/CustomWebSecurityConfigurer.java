@@ -18,6 +18,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
@@ -52,15 +53,21 @@ import java.util.List;
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class CustomWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors();
         http.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .authenticationProvider(authenticationProvider());
 
-        // 无权限异常处理
+        // 配置认证权限处理器
         http.authorizeRequests().accessDecisionManager(accessDecisionManager());
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+        // 配置401/403处理器
+        http.exceptionHandling().authenticationEntryPoint(new AdminAuthenticationEntryPoint())
+                .accessDeniedHandler(new AdminAccessDeineHandler());
+        // 不创建会话 - 即通过前端传token到后台过滤器中验证是否存在访问权限
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.anonymous().authenticationFilter(anonymousAuthenticationFilter());
         http.authorizeRequests()
                 .anyRequest()
