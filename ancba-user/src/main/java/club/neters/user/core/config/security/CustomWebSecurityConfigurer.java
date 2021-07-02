@@ -123,19 +123,20 @@ public class CustomWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         return new AnonymousAuthenticationFilter("ANONYMOUS") {
             @Override
             public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+
                 // TODO
                 String[] urls = {"/swagger-ui.html", "/swagger-resources/**",
-                        "/webjars/**", "/v2/**"};
+                        "/webjars/**", "/v2/**", "/error"};
                 HttpServletRequest request = (HttpServletRequest) req;
                 HttpServletResponse response = (HttpServletResponse) res;
                 if (HttpMethod.OPTIONS.matches(request.getMethod())) {
-                    chain.doFilter(req, res);
+                    super.doFilter(req, res, chain);
                     return;
                 }
                 for (String url : urls) {
                     RequestMatcher pathMatcher = new AntPathRequestMatcher(url);
                     if (pathMatcher.matches(request)) {
-                        chain.doFilter(req, res);
+                        super.doFilter(req, res, chain);
                         return;
                     }
                 }
@@ -144,7 +145,7 @@ public class CustomWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                     response.setStatus(401);
                     return;
                 }
-                chain.doFilter(req, res);
+                super.doFilter(req, res, chain);
             }
         };
     }
