@@ -25,6 +25,8 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
                 .authorizeRequests()
                 .antMatchers("/").permitAll() // 任意访问
                 .antMatchers("/csrf").permitAll() // 任意访问
+                .antMatchers("/actuator").permitAll() // 任意访问
+                .antMatchers("/actuator/health").permitAll() // 任意访问
                 .antMatchers("/swagger-ui.html").permitAll() // 任意访问
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/webjars/**").permitAll()

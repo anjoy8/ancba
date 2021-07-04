@@ -14,6 +14,7 @@ spring:
 eureka:
   instance:
     instance-id: ${spring.application.name}:${server.port}
+    health-check-url-path: /actuator/health
     prefer-ip-address: true
   client:
     service-url:
