@@ -28,7 +28,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement(proxyTargetClass = true)
 @ConditionalOnProperty(name = "spring.datasource.second.jdbc-url")
-@MapperScan(basePackages = "club.neters.user.infra.mapper.second", sqlSessionTemplateRef = "secondSqlSessionTemplate")
+@MapperScan(basePackages = "club.neters.shrio.demo.infra.mapper.second", sqlSessionTemplateRef = "secondSqlSessionTemplate")
 public class MybatisSecondConfig {
 
     @Bean

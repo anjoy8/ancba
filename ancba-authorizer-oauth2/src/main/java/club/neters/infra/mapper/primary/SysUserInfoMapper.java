@@ -25,7 +25,7 @@ public interface SysUserInfoMapper extends BaseMapper<SysUserInfo> {
     @Select("select * from sysUserInfo where uID = #{uID}")
     @Results(id="UserMap",value={
             @Result(property = "roles",column = "uID",
-                    many = @Many(select = "club.neters.user.infra.mapper.primary.RoleMapper.findAllByUId",
+                    many = @Many(select = "club.neters.infra.mapper.primary.RoleMapper.findAllByUId",
                             fetchType = FetchType.LAZY))
     })
     List<SysUserInfo> allSysUserInfo(Integer uID);

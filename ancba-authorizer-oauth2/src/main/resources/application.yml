@@ -10,6 +10,7 @@ spring:
     admin:
       client:
         url: http://localhost:8088
+        enabled: false
 
 eureka:
   instance:

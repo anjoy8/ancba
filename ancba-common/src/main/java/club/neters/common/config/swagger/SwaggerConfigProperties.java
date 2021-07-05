@@ -13,6 +13,7 @@ public class SwaggerConfigProperties implements Ordered {
     private String description;
     private String version;
     private String email;
+    private Boolean oauth = true;
 
     public String getBasePackage() {
         return basePackage;
@@ -57,5 +58,13 @@ public class SwaggerConfigProperties implements Ordered {
     @Override
     public int getOrder() {
         return 0;
+    }
+
+    public Boolean getOauth() {
+        return oauth;
+    }
+
+    public void setOauth(Boolean oauth) {
+        this.oauth = oauth;
     }
 }

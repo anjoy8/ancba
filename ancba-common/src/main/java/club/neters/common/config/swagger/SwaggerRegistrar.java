@@ -25,6 +25,7 @@ public class SwaggerRegistrar implements ImportBeanDefinitionRegistrar {
         String description = (String) attrMap.get("description");
         String version = (String) attrMap.get("version");
         String email = (String) attrMap.get("email");
+        boolean oauth = (boolean) attrMap.get("oauth");
 
         BeanDefinitionBuilder bd1 = BeanDefinitionBuilder.rootBeanDefinition(SwaggerConfigProperties.class);
         bd1.addPropertyValue("basePackage", basePackage);
@@ -32,6 +33,7 @@ public class SwaggerRegistrar implements ImportBeanDefinitionRegistrar {
         bd1.addPropertyValue("description", description);
         bd1.addPropertyValue("version", version);
         bd1.addPropertyValue("email", email);
+        bd1.addPropertyValue("oauth", oauth);
         registry.registerBeanDefinition("swaggerConfigProperties", bd1.getBeanDefinition());
 
         BeanDefinitionBuilder bd0 = BeanDefinitionBuilder.rootBeanDefinition(SwaggerConfig.class);

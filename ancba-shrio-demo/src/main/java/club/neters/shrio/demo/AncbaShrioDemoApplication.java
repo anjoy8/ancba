@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2021/6/25
  */
 @SpringBootApplication
-@EnableAncbaSwagger(basePackage = "club.neters.user", title = "接口文档", description = "用户模块接口文档")
+@EnableAncbaSwagger(basePackage = "club.neters.shrio.demo", title = "接口文档", description = "Shiro案例模块接口文档", oauth = false)
 public class AncbaShrioDemoApplication {
 
     public static void main(String[] args) {

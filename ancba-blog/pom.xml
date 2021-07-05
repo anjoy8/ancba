@@ -164,7 +164,7 @@
     </dependencies>
 
     <build>
-        <finalName>blog-spring</finalName>
+        <finalName>ancba-blog</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

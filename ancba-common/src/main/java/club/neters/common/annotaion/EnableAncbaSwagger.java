@@ -28,4 +28,6 @@ public @interface EnableAncbaSwagger {
     String version() default "1.0";
 
     String email() default "laozhang@azlinli.com";
+
+    boolean oauth() default true;
 }

@@ -29,7 +29,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement(proxyTargetClass = true)
 @ConditionalOnProperty(name = "spring.datasource.primary.jdbc-url")
-@MapperScan(basePackages = "club.neters.user.infra.mapper.primary", sqlSessionTemplateRef = "primarySqlSessionTemplate")
+@MapperScan(basePackages = "club.neters.shrio.demo.infra.mapper.primary", sqlSessionTemplateRef = "primarySqlSessionTemplate")
 public class MybatisPrimaryConfig {
 
     @Bean

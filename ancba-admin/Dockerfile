@@ -3,8 +3,8 @@ MAINTAINER laozhang <laozhang@azlinli.com>
 VOLUME /tmp
 COPY ./src/main/resources /opt
 ARG JAR_FILE
-ADD ${JAR_FILE} /app/app-blog.jar
-EXPOSE 9092
+ADD ${JAR_FILE} /app/app-admin.jar
+EXPOSE 8088
 #指定server
 #ENTRYPOINT ["java","-jar","/app/app.jar","0.0.0.0"]
-CMD ["java", "-jar", "-Xmx128M", "/app/app-blog.jar","--spring.config.location=../opt/application.yml"]
+CMD ["java", "-jar", "-Xmx128M", "/app/app-admin.jar","--spring.config.location=../opt/application.yml"]
