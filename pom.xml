@@ -55,7 +55,6 @@
 
     <modules>
         <module>ancba-blog</module>
-        <module>ancba-eureka</module>
         <module>ancba-gateway</module>
         <module>ancba-shrio-demo</module>
         <module>ancba-maven-archetype</module>
