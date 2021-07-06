@@ -3,11 +3,9 @@ package club.neters.blog;
 import club.neters.common.annotaion.EnableAncbaSwagger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 @EnableAncbaSwagger(basePackage = "club.neters.blog", title = "接口文档", description = "博客模块接口文档")
 @SpringBootApplication
-@EnableResourceServer
 public class AncbaBlogApplication {
 
     public static void main(String[] args) {

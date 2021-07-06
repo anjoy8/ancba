@@ -10,6 +10,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,6 +47,10 @@ public class BlogController {
     @ApiOperation(value = "获取用户列表")
     @GetMapping(value = "list")
     public ApiResultVo<List<BlogArticle>> listPage(UserInfoRequest query) {
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        System.out.println(authentication != null ? authentication.getAuthorities() : "no login");
+
         LambdaQueryWrapper<BlogArticle> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(BlogArticle::getIsDeleted, false)
                 .orderByDesc(BlogArticle::getBID)
