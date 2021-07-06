@@ -1,10 +1,14 @@
 server:
-  port: 8082
+  port: 9999
 
 spring:
   application:
     name: ancba-gateway
   cloud:
+    nacos:
+      # 注册中心
+      discovery:
+        server-addr: http://localhost:8918
     gateway:
       routes:
         - id: blog-spring
@@ -19,11 +23,3 @@ spring:
             - Path=/user/**
           filters:
             - StripPrefix=1
-eureka:
-  instance:
-    instance-id: ${spring.application.name}:${server.port}
-    prefer-ip-address: true
-    health-check-url-path: /actuator/health
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/

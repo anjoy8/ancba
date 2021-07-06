@@ -15,5 +15,6 @@ public class AncbaGateWayApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(AncbaGateWayApplication.class, args);
+        System.out.println("=================gw 网关服务启动成功=============");
     }
 }
