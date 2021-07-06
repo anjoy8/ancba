@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 这些接口 对于认证中心来说无需授权
      */
-    protected static final String[] PERMIT_ALL_URL = {"/oauth/**", "/user/**", "/actuator/**", "/error", "/open/api"};
+    protected static final String[] PERMIT_ALL_URL = {"/oauth/**", "/actuator/**", "/error", "/open/api"};
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

@@ -3,13 +3,11 @@ package club.neters.gateway.config;
 
 import club.neters.common.constant.CommonConstant;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusReactiveJwtDecoder;
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
@@ -32,7 +30,7 @@ public class WebSecurityConfig {
     /**
      * 这些接口 对于认证中心来说无需授权
      */
-    protected static final String[] PERMIT_ALL_URL = {"/oauth/**", "/user/**", "/actuator/**", "/error", "/open/api"};
+    protected static final String[] PERMIT_ALL_URL = {"/oauth/**", "/actuator/**", "/error", "/open/api"};
 
 
     @Bean

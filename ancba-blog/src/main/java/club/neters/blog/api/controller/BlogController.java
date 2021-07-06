@@ -1,9 +1,11 @@
 package club.neters.blog.api.controller;
 
-import club.neters.blog.app.service.ISysUserInfoService;
+import club.neters.blog.app.service.IBlogArticleService;
+import club.neters.blog.domain.entity.BlogArticle;
 import club.neters.blog.domain.request.user.UserInfoRequest;
 import club.neters.blog.domain.vo.ApiResultVo;
-import club.neters.blog.domain.vo.user.UserInfoVo;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +24,14 @@ import java.util.List;
  */
 @Api(tags = "用户管理")
 @RestController
-@RequestMapping("/api/user")
-public class UserInfoController {
+public class BlogController {
 
-    private final ISysUserInfoService sysUserInfoService;
+
+    private IBlogArticleService blogArticleService;
 
     @Autowired
-    public UserInfoController(ISysUserInfoService sysUserInfoService) {
-        this.sysUserInfoService = sysUserInfoService;
+    public BlogController(IBlogArticleService blogArticleService) {
+        this.blogArticleService = blogArticleService;
     }
 
 
@@ -41,15 +43,20 @@ public class UserInfoController {
      */
     @ApiOperation(value = "获取用户列表")
     @GetMapping(value = "list")
-    public ApiResultVo<List<UserInfoVo>> listPage(UserInfoRequest query) {
-        List<UserInfoVo> list = sysUserInfoService.findList(query);
+    public ApiResultVo<List<BlogArticle>> listPage(UserInfoRequest query) {
+        LambdaQueryWrapper<BlogArticle> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(BlogArticle::getIsDeleted, false)
+                .orderByDesc(BlogArticle::getBID)
+                .last("limit 3");
+
+        List<BlogArticle> list = blogArticleService.list(wrapper);
         return ApiResultVo.ok(list);
     }
 
     @PreAuthorize("hasAnyAuthority('AdminTest')")
     @ApiOperation(value = "测试接口授权")
     @GetMapping(value = "test")
-    public String test(){
+    public String test() {
         return "当前角色需要admin权限，恭喜你访问成功了!";
     }
 

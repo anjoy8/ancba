@@ -1,4 +1,4 @@
-package club.neters.blog.core.config.Security;//package club.neters.common.config.oauth2resource;
+package club.neters.blog.core.config.Security;
 
 import club.neters.common.constant.CommonConstant;
 import org.springframework.context.annotation.Bean;
@@ -18,8 +18,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
     @Override
     public void configure(final HttpSecurity http) throws Exception {
         http.cors()
-                .and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 .and()
                 .authorizeRequests()

@@ -6,7 +6,6 @@ import club.neters.core.util.UserPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,7 +20,6 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
-import javax.annotation.Resource;
 import java.util.Collections;
 
 /**
@@ -120,11 +118,33 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        // RSA非对称加密串，生成及加解密签名验签
+        converter.setVerifierKey(CommonConstant.JWT_HMAC256_SECRET);
         converter.setSigningKey(CommonConstant.JWT_HMAC256_SECRET);
         //使用自定义的 TokenConverter
         converter.setAccessTokenConverter(new JwtCustomerAccessTokenConverter());
         return converter;
     }
+
+//    /**
+//     * 使用非对称加密算法对token签名
+//     */
+//    @Bean
+//    public JwtAccessTokenConverter jwtAccessTokenConverter() {
+//        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+//        converter.setKeyPair(keyPair());
+//        return converter;
+//    }
+//
+//    /**
+//     * 从classpath下的密钥库中获取密钥对(公钥+私钥)
+//     */
+//    @Bean
+//    public KeyPair keyPair() {
+//        KeyStoreKeyFactory factory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "123456".toCharArray());
+//        KeyPair keyPair = factory.getKeyPair("jwt", "123456".toCharArray());
+//        return keyPair;
+//    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
