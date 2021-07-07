@@ -4,6 +4,7 @@ package club.neters.gateway.config;
 import club.neters.common.constant.CommonConstant;
 import club.neters.common.domain.vo.ApiResultVo;
 import club.neters.common.util.JsonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -36,10 +37,9 @@ import java.nio.charset.StandardCharsets;
 //@Configuration
 @EnableWebFluxSecurity
 public class WebSecurityConfig {
-    /**
-     * 这些接口 对于认证中心来说无需授权
-     */
-    protected static final String[] PERMIT_ALL_URL = {"/oauth/**", "/actuator/**", "/error", "/open/api"};
+
+    @Autowired
+    private AccessManager accessManager;
 
 
     @Bean
@@ -48,9 +48,8 @@ public class WebSecurityConfig {
                 .jwtAuthenticationConverter(jwtAuthenticationConverter());
 
         http.authorizeExchange()
-                .pathMatchers(PERMIT_ALL_URL).permitAll()
-                .anyExchange().authenticated()
-//                .access(authorizationManager)
+                .pathMatchers(CommonConstant.GW_SECURITY_WHITELIST).permitAll()
+                .anyExchange().access(accessManager)
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(accessDeniedHandler()) // 处理未授权
@@ -75,7 +74,7 @@ public class WebSecurityConfig {
     @Bean
     ServerAuthenticationEntryPoint authenticationEntryPoint() {
         return (exchange, e) -> {
-            Mono<Void> mono = Mono.defer(() -> Mono.just(exchange.getResponse()))
+            Mono mono = Mono.defer(() -> Mono.just(exchange.getResponse()))
                     .flatMap(response -> writeErrorInfo(response, JsonUtil.toJson(ApiResultVo.unauthorized("网关鉴权失败：401！"))));
             return mono;
         };
@@ -99,6 +98,9 @@ public class WebSecurityConfig {
     @Bean
     public Converter<Jwt, ? extends Mono<? extends AbstractAuthenticationToken>> jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+
+        // 把Jwt中的信息转化到SecurityContext#authentication#authorities中
+        jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName("authorities");
 
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
