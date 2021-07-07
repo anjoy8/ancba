@@ -10,6 +10,9 @@ spring:
       discovery:
         server-addr: http://localhost:8918
     gateway:
+      discovery:
+        locator:
+#          enabled: true
       routes:
         - id: blog-spring
           uri: lb://ancba-blog
@@ -20,6 +23,6 @@ spring:
         - id: ancba-user
           uri: lb://ancba-user
           predicates:
-            - Path=/user/**
+            - Path=/ancba-user/**
           filters:
             - StripPrefix=1

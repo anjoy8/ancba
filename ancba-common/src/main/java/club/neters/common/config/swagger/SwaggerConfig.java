@@ -1,10 +1,12 @@
 package club.neters.common.config.swagger;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.OAuthBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -13,9 +15,9 @@ import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +28,10 @@ import java.util.List;
  */
 @ConditionalOnBean(name = "swaggerConfigProperties")
 @Configuration
-@Import(Swagger2DocumentationConfiguration.class)
+@EnableSwagger2
+@Import({BeanValidatorPluginsConfiguration.class, Swagger2DocumentationConfiguration.class})
+@EnableKnife4j
+@ConfigurationProperties(prefix="swagger")
 public class SwaggerConfig {
 
     private SwaggerConfigProperties swaggerConfigProperties;
