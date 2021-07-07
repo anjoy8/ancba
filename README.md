@@ -1,14 +1,14 @@
 # Ancba    [![JDK](https://img.shields.io/badge/jdk-1.8.0-d.svg)](#)  [![Build status](https://github.com/anjoy8/blog-spring/workflows/Java/badge.svg)](https://github.com/anjoy8/blog-spring/actions)  [![Build Status](https://dev.azure.com/laozhangisphi/anjoy8/_apis/build/status/anjoy8.ancba?branchName=master)](https://dev.azure.com/laozhangisphi/anjoy8/_build?definitionId=2)   [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/anjoy8/blog-spring/blob/master/LICENSE) 
  
-#### 打造`Blog.Core`项目的`SpringBoot`兄弟版，但是更强大。  
+#### 打造`Blog.Core`项目的`SpringBoot`微服务版，但是更强大。  
 `Ancba` (Another New CLI By Alacrity) 另一个全新的敏捷脚手架（单体/模块化/微服务都可支持）。
 
 ### 核心知识点与进度
 
 - [x] 在 `..../resources/application-local.yml` 文件中，配置项目端口号、MySql连接数据等；
 - [x] 使用 `..../generator/MyBatisPlusGenerator` 生成器（直接运行即可），生成三层代码（实体、仓储、服务），若存在，则不覆盖；
-- [x] 基于 `spring-cloud-gateway` 搭建网关服务；
-- [x] 基于 `spring-cloud-eureka` 搭建服务发现；
+- [x] 基于 `spring-cloud-gateway` 搭建网关服务/认证鉴权/分流熔断；
+- [x] 基于 `alibaba-nacos` 搭建服务发现；
 - [x] 集成 `spring-boot-admin` 做服务监控；
 - [x] 封装插件：集成 `Swagger2` 做接口文档；
 - [x] 基于 `spring-security` 的`oauth2`协议搭建认证中心，并封装插件，全局可拔插使用；
