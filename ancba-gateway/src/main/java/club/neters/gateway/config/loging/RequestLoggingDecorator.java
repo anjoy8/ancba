@@ -22,17 +22,17 @@ public class RequestLoggingDecorator extends ServerHttpRequestDecorator {
 
     @Override
     public Flux<DataBuffer> getBody() {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         return super.getBody().doOnNext(dataBuffer -> {
             try {
-                Channels.newChannel(baos).write(dataBuffer.asByteBuffer().asReadOnlyBuffer());
-                String body = new String(baos.toByteArray(), StandardCharsets.UTF_8);
+                Channels.newChannel(byteArrayOutputStream).write(dataBuffer.asByteBuffer().asReadOnlyBuffer());
+                String body = new String(byteArrayOutputStream.toByteArray(), StandardCharsets.UTF_8);
                 LOGGER.info("Request: payload={}", body);
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
                 try {
-                    baos.close();
+                    byteArrayOutputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
