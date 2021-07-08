@@ -8,7 +8,7 @@
 - [x] 在 `..../resources/application-local.yml` 文件中，配置项目端口号、MySql连接数据等；
 - [x] 使用 `..../generator/MyBatisPlusGenerator` 生成器（直接运行即可），生成三层代码（实体、仓储、服务），若存在，则不覆盖；
 - [x] 基于 `spring-cloud-gateway` 搭建网关服务/认证鉴权/分流熔断；
-- [x] 基于 `alibaba-nacos` 搭建服务发现；
+- [x] 基于 `alibaba-nacos` 搭建服务发现；（本地测试，查看[官网](https://nacos.io/zh-cn/docs/quick-start.html)）
 - [x] 集成 `spring-boot-admin` 做服务监控；
 - [x] 集成 `Swagger2` 做接口文档，并封装插件，通过注解引入微服务；
 - [x] 基于 `Knif4j` 工具，配合网关，搭建微服务聚合文档；（参考 `ancba-gateway` 用户微服务)
