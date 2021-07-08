@@ -1,4 +1,4 @@
-package club.neters.gateway.config;
+package club.neters.gateway.config.security;
 
 
 import club.neters.common.constant.CommonConstant;
