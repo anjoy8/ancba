@@ -67,6 +67,6 @@ public class CommonExceptionHandler {
     @ResponseBody
     public ApiResultVo<?> handleException(Exception e) {
         log.error("未处理异常", e);
-        return ApiResultVo.error("服务异常");
+        return ApiResultVo.error("服务异常 " + e.getMessage());
     }
 }

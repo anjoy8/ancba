@@ -1,0 +1,27 @@
+version: '3.4'
+services:
+  ancba-admin:
+    image: 'laozhangisphi/ancba-admin:0.0.1-SNAPSHOT'
+    build:
+      context: .
+      dockerfile: ancba-admin/Dockerfile
+  ancba-authorizer-oauth2:
+    image: 'laozhangisphi/ancba-authorizer-oauth2:0.0.1-SNAPSHOT'
+    build:
+      context: .
+      dockerfile: ancba-authorizer-oauth2/Dockerfile
+  ancba-blog:
+    image: 'laozhangisphi/ancba-blog:0.0.1-SNAPSHOT'
+    build:
+      context: .
+      dockerfile: ancba-blog/Dockerfile
+  ancba-gateway:
+    image: 'laozhangisphi/ancba-gateway:0.0.1-SNAPSHOT'
+    build:
+      context: .
+      dockerfile: ancba-gateway/Dockerfile
+  ancba-user:
+    image: 'laozhangisphi/ancba-user:0.0.1-SNAPSHOT'
+    build:
+      context: .
+      dockerfile: ancba-user/Dockerfile

@@ -13,9 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,7 +28,7 @@ import java.util.List;
 public class BlogController {
 
 
-    private IBlogArticleService blogArticleService;
+    private final IBlogArticleService blogArticleService;
 
     @Autowired
     public BlogController(IBlogArticleService blogArticleService) {
@@ -41,7 +39,6 @@ public class BlogController {
     /**
      * 列表查询
      *
-     * @param query 请求参数
      * @return 用户列表
      */
     @ApiOperation(value = "获取用户列表")
@@ -50,6 +47,7 @@ public class BlogController {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         System.out.println(authentication != null ? authentication.getAuthorities() : "no login");
+        System.out.println(query);
 
         LambdaQueryWrapper<BlogArticle> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(BlogArticle::getIsDeleted, false)
@@ -67,4 +65,10 @@ public class BlogController {
         return "当前角色需要admin权限，恭喜你访问成功了!";
     }
 
+
+    @ApiOperation(value = "测试网关是否正常传递Post-body")
+    @PostMapping(value = "testBody")
+    public UserInfoRequest testBody(@RequestBody UserInfoRequest userInfoRequest) {
+        return userInfoRequest;
+    }
 }
