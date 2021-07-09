@@ -26,10 +26,20 @@
 
 
   
-### 目的和希望 👍：   
+### 目的与希望 👍：   
 
 - [ ] 如果感觉对自己现在或者将来有帮助，麻烦点个Star吧。
 - [x] 给 `.NET Core` 学习者一个了解`java`的机会，我们同处多语言的时代；
 - [x] PS：目前本项目是练手项目，等熟悉后，可继续拓展；
+
+  
+### 运行与效果 🎶：   
+
+- [x] 目前所有服务器展示；
+[![Admin Service](./doc/admin.png)](https://github.com/anjoy/ancba)  
+
+- [x] 单个微服务所占内存；
+[![Admin Service](./doc/admin-more.png)](https://github.com/anjoy/ancba)
+
 
 
