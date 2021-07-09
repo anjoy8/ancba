@@ -47,7 +47,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .cors()
                 .and()
-                .anonymous().disable()
+                // 取消禁用匿名，为健康检查做准备
+//                .anonymous().disable()
                 .csrf().disable()
                 .authorizeRequests()
                 //处理跨域请求中的Preflight请求
