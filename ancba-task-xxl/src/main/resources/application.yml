@@ -4,6 +4,27 @@ server:
 spring:
   application:
     name: ancba-task-xxl
+  profiles:
+    active: dev
+  boot:
+    admin:
+      client:
+        url: http://localhost:8088
+        enabled: false
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://localhost:8918
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
 
 # xxl-job配置
 xxl:
@@ -12,7 +33,7 @@ xxl:
       addresses: http://xxx:8380/xxl-job-admin
     executor:
       address:
-      appname: demo-app
+      appname: ancba-task-xxl
       ip:
       port: 0
       logpath: /logs/xxl-job/jobhandler
