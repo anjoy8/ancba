@@ -141,7 +141,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <repository>${project.artifactId}</repository>
+                    <repository>laozhangisphi/${project.artifactId}</repository>
                     <tag>${project.version}</tag>
                     <buildArgs>
                         <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>

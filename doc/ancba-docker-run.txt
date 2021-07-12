@@ -5,9 +5,9 @@
 docker stop ancba-gateway-container || true \
 && docker rm ancba-gateway-container || true \
 && docker run --name=ancba-gateway-container -d \
-# -v D:/data/ancba/gateway-application.yml:/opt/application.yml \
--it -p 9999:9999 ancba-gateway:0.0.1-SNAPSHOT
-# docker run --network dev-ops --network-alias devops-ancba-gateway --name=ancba-gateway-container -v D:/data/ancba/gateway-application.yml:/opt/application.yml -d -it -p 9999:9999 ancba-gateway:0.0.1-SNAPSHOT
+-v /data/ancba/gateway-application.yml:/opt/application.yml \
+--add-host=host.docker.internal:host-gateway --network dev-ops --network-alias devops-ancba-gateway -it -p 9999:9999 laozhangisphi/ancba-gateway:0.0.1-SNAPSHOT
+# docker run --network dev-ops --network-alias devops-ancba-gateway --name=ancba-gateway-container -v D:/data/ancba/gateway-application.yml:/opt/application.yml -d -it -p 9999:9999 laozhangisphi/ancba-gateway:0.0.1-SNAPSHOT
 
 
 
@@ -15,9 +15,9 @@ docker stop ancba-gateway-container || true \
 docker stop ancba-blog-container || true \
 && docker rm ancba-blog-container || true \
 && docker run --name=ancba-blog-container -d \
--v D:/data/ancba/ancba-blog/application-local.yml:/opt/application-local.yml \
--it -p 9092:9092 ancba-blog:0.0.1-SNAPSHOT
-# docker run --network dev-ops --network-alias devops-ancba-blog --name=ancba-blog-container -v D:/data/ancba/ancba-blog/application-local.yml:/opt/application-local.yml -d -it -p 9092:9092 ancba-blog:0.0.1-SNAPSHOT
+-v /data/ancba/ancba-blog/application-local.yml:/opt/application-local.yml \
+--add-host=host.docker.internal:host-gateway --network dev-ops --network-alias -it -p 9092:9092 laozhangisphi/ancba-blog:0.0.1-SNAPSHOT
+# docker run --network dev-ops --network-alias devops-ancba-blog --name=ancba-blog-container -v D:/data/ancba/ancba-blog/application-local.yml:/opt/application-local.yml -d -it -p 9092:9092 laozhangisphi/ancba-blog:0.0.1-SNAPSHOT
 
 
 
@@ -26,35 +26,35 @@ docker stop ancba-blog-container || true \
 docker stop ancba-user-container || true \
 && docker rm ancba-user-container || true \
 && docker run --name=ancba-user-container -d \
--v D:/data/ancba/ancba-user/application-dev.yml:/opt/application-dev.yml \
--it -p 8085:8085 ancba-user:0.0.1-SNAPSHOT
-# docker run  --network dev-ops --network-alias devops-ancba-user --name=ancba-user-container -v D:/data/ancba/ancba-user/application-dev.yml:/opt/application-dev.yml -d -it -p 8085:8085 ancba-user:0.0.1-SNAPSHOT
+-v /data/ancba/ancba-user/application-dev.yml:/opt/application-dev.yml \
+--add-host=host.docker.internal:host-gateway --network dev-ops --network-alias devops-ancba-user -it -p 8085:8085 laozhangisphi/ancba-user:0.0.1-SNAPSHOT
+# docker run  --network dev-ops --network-alias devops-ancba-user --name=ancba-user-container -v D:/data/ancba/ancba-user/application-dev.yml:/opt/application-dev.yml -d -it -p 8085:8085 laozhangisphi/ancba-user:0.0.1-SNAPSHOT
 
 
 ###authorizer###
 docker stop ancba-authorizer-oauth2-container || true \
 && docker rm ancba-authorizer-oauth2-container || true \
 && docker run --name=ancba-authorizer-oauth2-container -d \
--v D:/data/ancba/ancba-authorizer-oauth2/application-dev.yml:/opt/application-dev.yml \
--it -p 8181:8181 ancba-authorizer-oauth2:0.0.1-SNAPSHOT
-# docker run --network dev-ops --network-alias devops-ancba-authorizer --name=ancba-authorizer-oauth2-container -v D:/data/ancba/ancba-authorizer-oauth2/application-dev.yml:/opt/application-dev.yml -d -it -p 8181:8181 ancba-authorizer-oauth2:0.0.1-SNAPSHOT
+-v /data/ancba/ancba-authorizer-oauth2/application-dev.yml:/opt/application-dev.yml \
+--add-host=host.docker.internal:host-gateway --network dev-ops --network-alias devops-ancba-authorizer -it -p 8181:8181 laozhangisphi/ancba-authorizer-oauth2:0.0.1-SNAPSHOT
+# docker run --network dev-ops --network-alias devops-ancba-authorizer --name=ancba-authorizer-oauth2-container -v D:/data/ancba/ancba-authorizer-oauth2/application-dev.yml:/opt/application-dev.yml -d -it -p 8181:8181 laozhangisphi/ancba-authorizer-oauth2:0.0.1-SNAPSHOT
 
 
 ###admin###
 docker stop ancba-admin-container || true \
 && docker rm ancba-admin-container || true \
 && docker run --name=ancba-admin-container -d \
-# -v D:/data/ancba/ancba-admin/application-dev.yml:/opt/application-dev.yml \
--it -p 8088:8088 ancba-admin:0.0.1-SNAPSHOT
-# docker run --network dev-ops --network-alias devops-ancba-admin --name=ancba-admin-container -d -it -p 8088:8088 ancba-admin:0.0.1-SNAPSHOT
+# -v /data/ancba/ancba-admin/application-dev.yml:/opt/application-dev.yml \
+--add-host=host.docker.internal:host-gateway --network dev-ops --network-alias devops-ancba-admin -it -p 8088:8088 laozhangisphi/ancba-admin:0.0.1-SNAPSHOT
+# docker run --network dev-ops --network-alias devops-ancba-admin --name=ancba-admin-container -d -it -p 8088:8088 laozhangisphi/ancba-admin:0.0.1-SNAPSHOT
 
 
 ###shiro###
 docker stop ancba-shrio-demo-container || true \
 && docker rm ancba-shrio-demo-container || true \
 && docker run --name=ancba-shrio-demo-container -d \
--v D:/data/ancba/ancba-shrio-demo/application-dev.yml:/opt/application-dev.yml \
--it -p 8083:8083 ancba-shrio-demo:0.0.1-SNAPSHOT
-# docker run  --network dev-ops --network-alias devops-ancba-shrio-demo --name=ancba-shrio-demo-container -v D:/data/ancba/ancba-shrio-demo/application-dev.yml:/opt/application-dev.yml -d -it -p 8083:8083 ancba-shrio-demo:0.0.1-SNAPSHOT
+-v /data/ancba/ancba-shrio-demo/application-dev.yml:/opt/application-dev.yml \
+--add-host=host.docker.internal:host-gateway --network dev-ops --network-alias devops-ancba-shrio-demo -it -p 8083:8083 laozhangisphi/ancba-shrio-demo:0.0.1-SNAPSHOT
+# docker run  --network dev-ops --network-alias devops-ancba-shrio-demo --name=ancba-shrio-demo-container -v D:/data/ancba/ancba-shrio-demo/application-dev.yml:/opt/application-dev.yml -d -it -p 8083:8083 laozhangisphi/ancba-shrio-demo:0.0.1-SNAPSHOT
 
 
