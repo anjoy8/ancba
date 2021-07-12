@@ -62,5 +62,6 @@
         <module>ancba-authorizer-oauth2</module>
         <module>ancba-common</module>
         <module>ancba-user</module>
+        <module>ancba-task-xxl</module>
     </modules>
 </project>

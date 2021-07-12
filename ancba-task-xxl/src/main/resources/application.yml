@@ -1,0 +1,20 @@
+server:
+  port: 8186
+
+spring:
+  application:
+    name: ancba-task-xxl
+
+# xxl-job配置
+xxl:
+  job:
+    admin:
+      addresses: http://xxx:8380/xxl-job-admin
+    executor:
+      address:
+      appname: demo-app
+      ip:
+      port: 0
+      logpath: /logs/xxl-job/jobhandler
+      logretentiondays: 15
+    accessToken: xxx
