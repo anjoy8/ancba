@@ -17,6 +17,7 @@
 - [x] 基于数据库动态配置权限，实现 `RBAC` 服务授权；（参考 `ancba-user` 用户微服务，或者在网关中查看 `accessManager`)
 - [x] 使用 `spring-cloud-openfeign` 实现服务间调用；（参考 `ancba-user` 用户微服务)
 - [x] 实现 `openfign` 调用被 `security` 加权的其他微服务；（案例同上，通过`token`方式，也可在网关处理鉴权，服务间就不用鉴权）
+- [x] 基于 `xxl.job` 实现分布式任务调度；（参考 `ancba-task-xxl` 任务微服务)
 - [ ] and so on...
   
 ### 操作与运行步骤 📕
