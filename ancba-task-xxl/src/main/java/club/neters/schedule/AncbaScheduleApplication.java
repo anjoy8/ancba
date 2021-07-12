@@ -1,11 +1,14 @@
 package club.neters.schedule;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Hello world!
+ * 任务调度
  *
  */
+@SpringBootApplication
 public class AncbaScheduleApplication
 {
     public static void main(String[] args) {
