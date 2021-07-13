@@ -30,12 +30,12 @@ management:
 xxl:
   job:
     admin:
-      addresses: http://xxx:8380/xxl-job-admin
+      addresses: http://localhost:8380/xxl-job-admin
     executor:
       address:
       appname: ancba-task-xxl
       ip:
-      port: 0
+      port: 9876
       logpath: /logs/xxl-job/jobhandler
       logretentiondays: 15
     accessToken: xxx

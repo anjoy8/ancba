@@ -58,3 +58,13 @@ docker stop ancba-shrio-demo-container || true \
 # docker run  --network dev-ops --network-alias devops-ancba-shrio-demo --name=ancba-shrio-demo-container -v D:/data/ancba/ancba-shrio-demo/application-dev.yml:/opt/application-dev.yml -d -it -p 8083:8083 laozhangisphi/ancba-shrio-demo:0.0.1-SNAPSHOT
 
 
+
+###task###
+docker stop ancba-task-xxl-container || true \
+&& docker rm ancba-task-xxl-container || true \
+&& docker run --name=ancba-task-xxl-container -d \
+-v /data/ancba/ancba-task-xxl/application-dev.yml:/opt/application-dev.yml \
+--add-host=host.docker.internal:host-gateway --network dev-ops --network-alias devops-ancba-task-xxl -it -p 8186:8186 laozhangisphi/ancba-task-xxl:0.0.1-SNAPSHOT
+# docker run  --network dev-ops --network-alias devops-ancba-task-xxl --name=ancba-task-xxl-container -v D:/data/ancba/ancba-task-xxl/application-dev.yml:/opt/application-dev.yml -d -it -p 8186:8186 laozhangisphi/ancba-task-xxl:0.0.1-SNAPSHOT
+
+
