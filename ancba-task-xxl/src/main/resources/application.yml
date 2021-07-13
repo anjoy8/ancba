@@ -38,4 +38,4 @@ xxl:
       port: 9876
       logpath: /logs/xxl-job/jobhandler
       logretentiondays: 15
-    accessToken: xxx
+    accessToken:
