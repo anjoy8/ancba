@@ -15,6 +15,6 @@ public interface UserApiService {
     /**
      * 查询用户数据
      */
-    @RequestMapping(value = "/api/user/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     ApiResultVo<List<UserInfoVoFromBlog>> loadUserListPage(UserInfoRequestFromBlog query);
 }

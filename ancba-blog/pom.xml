@@ -162,6 +162,14 @@
             <artifactId>ancba-common</artifactId>
             <version>1.0.0</version>
         </dependency>
+
+        <!-- 这个依赖包含了sleuth和zipkin -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+            <version>2.2.8.RELEASE</version>
+        </dependency>
+
     </dependencies>
 
     <build>
