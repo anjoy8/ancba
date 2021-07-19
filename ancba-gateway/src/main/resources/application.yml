@@ -9,6 +9,9 @@ spring:
       # 注册中心
       discovery:
         server-addr: http://localhost:8918
+      config:
+        server-addr: 127.0.0.1:8918 #Nacos配置中心地址
+#        file-extension: yaml #指定yml格式的配置
     gateway:
       globalcors:
         cors-configurations:
