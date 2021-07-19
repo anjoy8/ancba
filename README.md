@@ -38,11 +38,20 @@
   
 ### 运行与效果 🎶：   
 
-- [x] 目前所有服务器展示；
+- [x] 目前所有服务器展示（spring-admin）；
 [![Admin Service](./doc/admin.png)](https://github.com/anjoy/ancba)  
 
-- [x] 单个微服务所占内存；
-[![Admin Service](./doc/admin-more.png)](https://github.com/anjoy/ancba)
+- [x] 单个微服务所占内存；  
+[![Admin Service](./doc/admin-more.png)](https://github.com/anjoy/ancba)  
+
+- [x] 注册中心/配置中心（nacos）；  
+[![Admin Service](./doc/nacos.png)](https://github.com/anjoy/ancba)  
+
+- [x] 任务调度中心（xxl.job）；  
+[![Admin Service](./doc/xxl.png)](https://github.com/anjoy/ancba)  
+
+- [x] 链路调度（zipkin/sleuth）；  
+[![Admin Service](./doc/zipkin.png)](https://github.com/anjoy/ancba)  
 
 
 
