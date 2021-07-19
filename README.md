@@ -9,9 +9,10 @@
 - [x] 使用 `..../generator/MyBatisPlusGenerator` 生成器（直接运行即可），生成三层代码（实体、仓储、服务），若存在，则不覆盖；
 - [x] 基于 `spring-cloud-gateway` 搭建网关服务/认证鉴权/分流熔断；
 - [x] 基于 `alibaba-nacos` 搭建服务发现；（本地测试，查看[官网](https://nacos.io/zh-cn/docs/quick-start.html)）
+- [x] 基于 `alibaba-nacos` 实现配置管理；（参考 `ancba-gateway` 网关微服务，文档查看[官网](https://github.com/alibaba/spring-cloud-alibaba/wiki/Nacos-config)）
 - [x] 集成 `spring-boot-admin` 做服务监控；
 - [x] 集成 `Swagger2` 做接口文档，并封装插件，通过注解引入微服务；
-- [x] 基于 `Knif4j` 工具，配合网关，搭建微服务聚合文档；（参考 `ancba-gateway` 用户微服务)
+- [x] 基于 `Knif4j` 工具，配合网关，搭建微服务聚合文档；（参考 `ancba-gateway` 网关微服务)
 - [x] 基于 `spring-security` 的`oauth2`协议搭建认证中心，并封装插件，全局可拔插使用；
 - [x] 封装 `apache-shiro` 微服务 ，实现简单用户授权操作；（测试 `shiro` 的demo，整个微服务项目基于security做认证授权）
 - [x] 基于数据库动态配置权限，实现 `RBAC` 服务授权；（参考 `ancba-user` 用户微服务，或者在网关中查看 `accessManager`)

@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class CSRFController {
-//    @Value("${demo.user.name}")
-//    private String userName;
+    @Value("${demo.user}")
+    private String userName;
 
     @GetMapping(value = "/v2/test")
     public String test() {
-        return "ResponseEntity.ok()";
+        return userName + "are u?";
     }
 }
