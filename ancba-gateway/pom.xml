@@ -32,6 +32,13 @@
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
 
+        <!--admin监控-->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+
         <!-- 注册中心-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -59,11 +66,6 @@
             <scope>compile</scope>
         </dependency>
 
-        <!--security-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>-->
-<!--        </dependency>-->
         <!-- OAuth2资源服务器-->
         <dependency>
             <groupId>org.springframework.security</groupId>

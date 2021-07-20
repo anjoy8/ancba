@@ -1,6 +1,12 @@
 spring:
   application:
     name: ancba-gateway
+  boot:
+    admin:
+      client:
+        url: http://localhost:8088
+        enabled: true
+
   cloud:
     gateway:
       globalcors:
@@ -38,3 +44,12 @@ spring:
             - Path=/ancba-user/**
           filters:
             - StripPrefix=1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
