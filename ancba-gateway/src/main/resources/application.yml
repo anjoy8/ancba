@@ -4,7 +4,7 @@ spring:
   boot:
     admin:
       client:
-        url: http://localhost:8088
+        url: http://host.docker.internal:8088
         enabled: true
 
   cloud:
