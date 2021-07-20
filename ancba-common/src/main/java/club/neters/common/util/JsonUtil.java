@@ -4,9 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * Json Util
  *
@@ -32,24 +29,11 @@ public class JsonUtil {
     }
 
     /**
-     * json to map
+     * json to bean
      */
-    public static <K, V> Map<K, V> toMap(String content) {
+    public static <T> T toBean(String content, TypeReference<T> typeReference) {
         try {
-            return objectMapper.readValue(content, new TypeReference<Map<K, V>>() {
-            });
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * json to list
-     */
-    public static <E> List<E> toList(String content) {
-        try {
-            return objectMapper.readValue(content, new TypeReference<List<E>>() {
-            });
+            return objectMapper.readValue(content, typeReference);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
