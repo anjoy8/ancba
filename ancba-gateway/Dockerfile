@@ -7,4 +7,4 @@ ADD ${JAR_FILE} /app/app-gateway.jar
 EXPOSE 9999
 #指定server
 #ENTRYPOINT ["java","-jar","/app/app.jar","0.0.0.0"]
-CMD ["java", "-jar", "-Xmx128M", "/app/app-gateway.jar","--spring.config.location=../opt/application.yml"]
+CMD ["java", "-jar", "-Xmx128M", "/app/app-gateway.jar"]
