@@ -39,3 +39,7 @@ xxl:
       logpath: /logs/xxl-job/jobhandler
       logretentiondays: 15
     accessToken:
+
+security:
+  server:
+    url: http://localhost:8181/oauth/token

@@ -1,6 +1,7 @@
 package club.neters.common.config.swagger;
 
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -31,12 +32,13 @@ import java.util.List;
 @EnableSwagger2
 @Import({BeanValidatorPluginsConfiguration.class, Swagger2DocumentationConfiguration.class})
 @EnableKnife4j
-@ConfigurationProperties(prefix="swagger")
+@ConfigurationProperties(prefix = "swagger")
 public class SwaggerConfig {
 
     private SwaggerConfigProperties swaggerConfigProperties;
 
-    private String AUTH_SERVER = "http://localhost:8181/oauth/token";
+    @Value("${security.server.url}")
+    private String AUTH_SERVER;
 
     @Bean
     public Docket createRestApi() {

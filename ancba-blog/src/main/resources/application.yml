@@ -40,3 +40,7 @@ logback:
   appName: blog-spring
   fileType: log
   logDir: logs
+
+security:
+  server:
+    url: http://localhost:8181/oauth/token
