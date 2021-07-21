@@ -53,5 +53,8 @@
 - [x] 链路调度（zipkin/sleuth）；  
 [![Admin Service](./doc/zipkin.png)](https://github.com/anjoy/ancba)  
 
+   
+[![Admin Service](./doc/z2.png)](https://github.com/anjoy/ancba)  
+
 
 
