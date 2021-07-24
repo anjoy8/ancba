@@ -3,6 +3,13 @@
 #### 打造`Blog.Core`项目的`SpringBoot`微服务版，但是更强大 👏  
 `Ancba` (Another New CLI By Alacrity) 另一个全新的敏捷脚手架（单体/模块化/微服务都可支持）。
 
+
+#### 联系我
+如果想一起学JAVA，或者想要对Ancba框架有意见或建议的，欢迎加入架构师交流群，只要交流心得都可以进入。
+  
+  [![ancba qc](./doc/wechat.png)](https://github.com/anjoy/ancba)  
+
+
 ### 核心知识点与进度 📣
 
 - [x] 在 `..../resources/application-local.yml` 文件中，配置项目端口号、MySql连接数据等；
