@@ -7,8 +7,7 @@
 #### 联系我
 如果想一起学JAVA，或者想要对Ancba框架有意见或建议的，欢迎加入架构师交流群，只要交流心得都可以进入。
   
-  [![ancba qc](./doc/wechat.png)](https://github.com/anjoy/ancba)  
-
+<img src="https://raw.githubusercontent.com/anjoy8/ancba/master/doc/wechat.png" width="300px;" />
 
 ### 核心知识点与进度 📣
 
