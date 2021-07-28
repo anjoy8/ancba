@@ -6,6 +6,10 @@ spring:
       client:
         url: http://host.docker.internal:8088
         enabled: true
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
 
   cloud:
     gateway:
@@ -38,12 +42,22 @@ spring:
             - Path=/ancba-blog/**
           filters:
             - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 2
+                key-resolver: "#{@ipKeyResolver}"
         - id: ancba-user
           uri: lb://ancba-user
           predicates:
             - Path=/ancba-user/**
           filters:
             - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 2
+                key-resolver: "#{@ipKeyResolver}"
 
 management:
   endpoints:
