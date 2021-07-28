@@ -27,6 +27,25 @@
 - [x] 基于 `xxl.job` 实现分布式任务调度；（参考 `ancba-task-xxl` 任务微服务)
 - [x] 使用 `spring-cloud-sleuth` 配合 `zipkin` 实现链路追踪；（参考 `ancba-user` 用户微服务)
 - [ ] and so on...
+
+
+
+### Docker - 全部镜像
+
+| Image | Status | Image | Status |
+| ------------- | ------------- | ------------- | ------------- |
+| laozhangisphi/ancba-user |  [![JDK](https://img.shields.io/badge/image-succeed-d.svg)](https://hub.docker.com/repository/docker/laozhangisphi/ancba-user) | laozhangisphi/ancba-admin |  [![JDK](https://img.shields.io/badge/image-succeed-d.svg)](https://hub.docker.com/repository/docker/laozhangisphi/ancba-admin) |
+| laozhangisphi/ancba-authorizer-oauth2 |  [![JDK](https://img.shields.io/badge/image-succeed-d.svg)](https://hub.docker.com/repository/docker/laozhangisphi/ancba-authorizer-oauth2) | laozhangisphi/ancba-shrio-demo |  [![JDK](https://img.shields.io/badge/image-succeed-d.svg)](https://hub.docker.com/repository/docker/laozhangisphi/ancba-shrio-demo) |
+| laozhangisphi/ancba-task-xxl |  [![JDK](https://img.shields.io/badge/image-succeed-d.svg)](https://hub.docker.com/repository/docker/laozhangisphi/ancba-task-xxl) | laozhangisphi/ancba-gateway |  [![JDK](https://img.shields.io/badge/image-succeed-d.svg)](https://hub.docker.com/repository/docker/laozhangisphi/ancba-gateway) |
+| laozhangisphi/ancba-blog |  [![JDK](https://img.shields.io/badge/image-succeed-d.svg)](https://hub.docker.com/repository/docker/laozhangisphi/ancba-blog) | |  |
+
+_**Master** branch contains the latest **beta** code and their images are tagged with `:0.0.1-SNAPSHOT` in our [Docker Hub](https://hub.docker.com/u/laozhangisphi)_
+
+ 
+ 
+ 
+ 
+
   
 ### 操作与运行步骤 📕
 
