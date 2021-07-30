@@ -77,9 +77,9 @@ _**Master** branch contains the latest **beta** code and their images are tagged
 
 - [x] 链路调度（zipkin/sleuth）；  
 [![Admin Service](./doc/zipkin.png)](https://github.com/anjoy/ancba)  
-
-   
 [![Admin Service](./doc/z2.png)](https://github.com/anjoy/ancba)  
 
+- [x] 网关限流；  
+[![Admin Service](./doc/limit.png)](https://github.com/anjoy/ancba)  
 
 
