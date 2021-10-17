@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("sysUserInfo")
+@TableName("SysUserInfo")
 public class SysUserInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;

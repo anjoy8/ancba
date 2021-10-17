@@ -20,7 +20,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("sysUserInfo")
+@TableName("SysUserInfo")
 public class SysUserInfo {
 
     @EntityDoc(note = "id")

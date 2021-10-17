@@ -22,7 +22,7 @@ import java.util.List;
 @Repository
 public interface SysUserInfoMapper extends BaseMapper<SysUserInfo> {
 
-    @Select("select * from sysUserInfo where uID = #{uID}")
+    @Select("select * from SysUserInfo where uID = #{uID}")
     @Results(id="UserMap",value={
             @Result(property = "roles",column = "uID",
                     many = @Many(select = "club.neters.shrio.demo.infra.mapper.primary.RoleMapper.findAllByUId",
