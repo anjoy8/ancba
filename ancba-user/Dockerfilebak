@@ -1,4 +1,4 @@
-FROM apache/skywalking-base:8.3.0-es6
+FROM adoptopenjdk:11-jre-hotspot
 MAINTAINER laozhang <laozhang@azlinli.com>
 VOLUME /tmp
 COPY ./src/main/resources /opt
@@ -7,4 +7,4 @@ ADD ${JAR_FILE} /app/app-user.jar
 EXPOSE 8085
 #指定server
 #ENTRYPOINT ["java","-jar","/app/app.jar","0.0.0.0"]
-CMD ["java", "-javaagent:/skywalking/agent/skywalking-agent.jar", "-jar", "-Xmx128M", "/app/app-user.jar","--spring.config.location=../opt/application.yml"]
+CMD ["java", "-jar", "-Xmx128M", "/app/app-user.jar","--spring.config.location=../opt/application.yml"]
